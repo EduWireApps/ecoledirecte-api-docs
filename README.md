@@ -19,7 +19,7 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation
 - [Codes erreur](#codes-erreur)
 - [Account objects](#accounts-objects)
     - [Modules](#account-modules)
-
+- [Servers.json](#server.json)
 
 * [Login](#login)
 
@@ -381,6 +381,59 @@ Voici la liste des modules qui ont été documentés jusqu'a présent
     "params": {}
 }
 
+```
+
+### Servers.json
+
+EcoleDirecte n'utilise pas qu'un seul serveur, il est possible d'obtenir des informations sur les serveurs du site en une seule requete.
+La raison pour laquelle cette partie est dans la partie référence c'est car cela n'a pas trop d'utilitée a vraiment parler...
+
+Request
+```
+    Endpoint: https://www.ecoledirecte.com/EDCluster/servers.json
+    Endpoint information: On peut noter que cet endpoit prends un argumenent get, "c" qui semble optonnel jusqu'a présent
+    Type of request: GET
+    Body:
+        None
+    Headers:
+        None
+```
+
+Response
+```js
+{
+  "servers": [ //On va recevoir une liste d'objets comme celui ci dessous
+    {
+      "profile": "API", //string | Alterne enre API / APIP et ALL
+      "lastCheck": "Mon Mar 16 2020 20:55:47 GMT+0100 (CET)", // ???
+      "name": "api.ecoledirecte.com", //string | url du serveur
+      "ip": "213.32.36.118", //string | ip du serveur
+      "status": 1,//int | 1 = en marche; 2 = off ???
+      "responseTime": 338.23671800643206, //float | ping
+      "weigth": 3, //int | ???
+      "timeout": false, //bool | Si le serveur a timeout
+      "version": "Maj du 16/03/2020 à 16h27", //string, version logicielle du serveur
+      "bdTested": "95", //string | ???
+      "elapsedTime": 338, //int | ???
+      "timingPhases": { //Object representatant la latence avec des détails
+        "wait": 78.6058100014925,
+        "dns": 3.143696002662182,
+        "tcp": 7.182815000414848,
+        "firstByte": 249.2012169957161,
+        "download": 0.10318000614643097,
+        "total": 338.23671800643206
+      },
+      "timings": {
+        "socket": 78.6058100014925,
+        "lookup": 81.74950600415468,
+        "connect": 88.93232100456953,
+        "response": 338.1335380002856,
+        "end": 338.23671800643206
+      },
+      "httptested": "HTTP76",
+      "nbConnexions": 1,//int | Nombre d'utilisateur connectés ??
+      "errorCode": "ESOCKETTIMEDOUT"
+    },
 ```
 
 ----
