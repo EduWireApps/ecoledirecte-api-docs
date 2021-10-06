@@ -16,7 +16,7 @@ Si jamais cette documentation vient a être défaillante, merci de faire une iss
 
 Juste un rapide sommaire pour naviguer plus facilement dans la documentation
 
-
+- [Codes erreur](#codes-erreur)
 - [Account objects](#accounts-objects)
     - [Modules](#account-modules)
 
@@ -31,6 +31,20 @@ L'url de base utilisé est ``https://api.ecoledirecte.com/v3/`` (cette doc ne se
 Dans presques toutes les requetes, on aura besoin d'un token utilisateur, il peut être obtenu par l'endpoint [login](#login)
 
 Si jamais des informations sont a envoyer en ``POST``, il faudra alors obligatoirement les envoyer en ``plain text / raw`` (indiqué le cas contraire)
+
+### Codes erreur
+
+Liste de differents condes erreur trouvés au fil du temps avec leur description et des solutions pour fixer le pb
+
+```
+Code: 505
+Problème: Les identifiants donnés à l'api sont erronés
+Solution: Il faut vérifier que le nom d'utiliser et le mot de passe soient corrects
+
+Code: 40129
+Problème: Format JSON invalide
+Solution: Vérifier que le body de la requete a bien été envoyé en raw (ou plain text) et qu'il respecte le formatage donné dans la documentation
+```
 
 ### Accounts objects
 
@@ -390,7 +404,7 @@ Request
 ```
 
 Response (200)
-```
+```js
 {
   "code": 200,
   "token": "Super secret token here", //Token de connexion (+3100 long)
