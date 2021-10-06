@@ -1,6 +1,6 @@
 # EcoleDirecte Api Documentation
 
-## Introdcution
+## Introduction
 
 
 Bienvenue sur la documentation non officielle de l'api d'ecoledirecte.
@@ -17,8 +17,8 @@ Si jamais cette documentation vient a être défaillante, merci de faire une iss
 Juste un rapide sommaire pour naviguer plus facilement dans la documentation
 
 
-- [Account object](#reference-account-object)
-    - [Modules](#reference-account-modules)
+- [Account objects](#accounts-objects)
+    - [Modules](#account-modules)
 
 
 * [Login](#login)
