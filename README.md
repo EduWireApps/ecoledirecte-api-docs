@@ -36,10 +36,16 @@ Si jamais des informations sont a envoyer en ``POST``, il faudra alors obligatoi
 
 Liste de differents condes erreur trouvés au fil du temps avec leur description et des solutions pour fixer le pb
 
+*Note : Les requêtes renveront (sauf grosse erreur côté serveur avec une 5xx) toujours dans leur header un code 200, même en cas d'erreur*
+
 ```
 Code: 505
 Problème: Les identifiants donnés à l'api sont erronés
-Solution: Il faut vérifier que le nom d'utiliser et le mot de passe soient corrects
+Solution: Il faut vérifier le nom d'utilisateur et/ou le mot de passe (cf Login)
+
+Code: 520
+Problème: Le token est invalide
+Solution: Il faut regénérer un token (cf Login)
 
 Code: 40129
 Problème: Format JSON invalide
@@ -456,7 +462,9 @@ Request
         None
 ```
 
-Response (200)
+Responses :
+
+Succès
 ```js
 {
   "code": 200,
@@ -468,5 +476,89 @@ Response (200)
     ]
   }
 }
+```
 
+Erreur (Mot de passe invalide)
+```js
+{
+  "code": 505, 
+  "token": "", //Toujours vide en cas d'erreur
+  "message": "Mot de passe invalide !",
+  "data": {
+    "accounts": []
+  }
+}
+```
+
+Erreur (Utilisateur introuvable)
+```js
+{
+  "code": 505,
+  "token": "", //Toujours vide en cas d'erreur
+  "message": "Identifiant et/ou mot de passe invalide !",
+  "data": {
+    "accounts": []
+  }
+}
+```
+
+### Timeline
+
+Je sais pas quel phyco aurait besoin de la timeline mais bon 
+
+Request
+```
+    Endpoint : https://api.ecoledirecte.com/v3/eleves/2306/timeline.awp?verbe=get
+    Type of request : POST
+    Body : 
+        data={
+          "token": "token"
+        }
+    Headers : 
+        None
+```
+
+Responses :
+
+Succès
+```js
+{
+  "code": 200,
+  "token": "Super secret token here" //String | Token de connexion
+  "host": "HTTP186", // ???
+  "data": [ //Liste des évènements relatif au compte (quelques exemples d'évènement peuvent être trouvés)
+    {
+      "date": "2021-12-05", //String | Date de l'evènement
+      "typeElement": "Note", //String | Type de l'event (Note / Abscence / Document / ???)
+      "idElement": 0, // Int | ???
+      "titre": "Nouvelle évaluation", //String | Titre de l'evenement
+      "soustitre": "ED.PHYSIQUE & SPORT.", 
+      "contenu": "natation du 15/11/2021" //String | Contenu de l'evenement
+    },
+    {
+      "date": "2021-09-20",
+      "typeElement": "VieScolaire",
+      "idElement": 527,
+      "titre": "Absence",
+      "soustitre": "2 demi-journées",
+      "contenu": "Justifiée"
+    },
+    {
+      "date": "2021-09-17",
+      "typeElement": "Document",
+      "idElement": 2538,
+      "titre": "Nouveau document à télécharger",
+      "soustitre": "",
+      "contenu": "Invitation 50 ans"
+    },
+    {
+      "date": "2021-09-09",
+      "typeElement": "Document",
+      "idElement": 1144,
+      "titre": "Nouveau document à télécharger",
+      "soustitre": "",
+      "contenu": "Certificat de scolarité"
+    }
+  ]
+}
 ```
