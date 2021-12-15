@@ -23,6 +23,7 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation
 
 * [Login](#login)
 * [Timeline](#timeline)
+* [Emploi du temps](#Emploi du temps)
 
 ----
 ## Reference
@@ -46,6 +47,10 @@ Solution: Il faut vérifier le nom d'utilisateur et/ou le mot de passe (cf Login
 
 Code: 520
 Problème: Le token est invalide
+Solution: Il faut regénérer un token (cf Login)
+
+Code: 525
+Problème: Le token est expiré
 Solution: Il faut regénérer un token (cf Login)
 
 Code: 40129
@@ -395,6 +400,8 @@ Voici la liste des modules qui ont été documentés jusqu'a présent
 EcoleDirecte n'utilise pas qu'un seul serveur, il est possible d'obtenir des informations sur les serveurs du site en une seule requete.
 La raison pour laquelle cette partie est dans la partie référence c'est car cela n'a pas trop d'utilitée a vraiment parler...
 
+*Notes : Il semblerait que le fichier soit statique :c (les pings sont les mêmes depuis que j'ai commecé la doc)*
+
 Request
 ```
     Endpoint: https://www.ecoledirecte.com/EDCluster/servers.json
@@ -446,7 +453,7 @@ Response
 ----
 ## Documentation
 
-Ici se trouve toute la documentation, assurez vous d'avoir lu la référence avant de commencer 
+Ici se trouve toute la documentation, assurez-vous d'avoir lu la référence avant de commencer 
 
 ### Login
 
@@ -505,7 +512,7 @@ Erreur (Utilisateur introuvable)
 
 ### Timeline
 
-Je sais pas quel phyco aurait besoin de la timeline mais bon 
+Je sais pas qui aurait besoin de la timeline mais bon (:
 
 Request
 ```
@@ -559,6 +566,92 @@ Succès
       "titre": "Nouveau document à télécharger",
       "soustitre": "",
       "contenu": "Certificat de scolarité"
+    }
+  ]
+}
+```
+
+### Emploi du temps
+
+Le titre est plutot clair non ? 
+
+*Note : Si jamais le temps est incorrect alors data sera juste un array vide*
+
+Request
+```
+    Endpoint : https://api.ecoledirecte.com/v3/E/2306/emploidutemps.awp?verbe=get
+    Type of request : POST
+    Body : 
+        data={
+          "dateDebut": "2021-12-15",
+          "dateFin": "2021-12-15",
+          "avecTrous": false,
+          "token": "token"
+        }
+    Headers : 
+        None
+```
+
+Responses :
+
+Succès
+```js
+{
+  "code": 200,
+  "token": "Super secret token here" //String | Token de connexion
+  "host": "HTTP186", // ???
+  "data": [
+    {
+      "id": 46234, //int | Semble être un identifiant unique du cours
+      "text": "NUMERIQUE SC.INFORM.", //string | Nom du cours (peut diférer de la matière)
+      "matiere": "NUMERIQUE SC.INFORM.", 
+      "codeMatiere": "NSINF", //string | Code matière interne au service ED
+      "typeCours": "COURS", //string | Semble varier (COURS / PERMANENCE)
+      "start_date": "2021-12-15 08:00",
+      "end_date": "2021-12-15 08:55",
+      "color": "#91b2bc", //string | Couleur hex du cours sur l'edt
+      "dispensable": false, //string | Si l'élève doit se rendre en cours
+      "dispense": 0, //int | Rhalala, le sport (:
+      "prof": "MaitreRouge",
+      "salle": "SALLE 11 INFO",
+      "classe": "", //string | vide si est dispensé dans plusieures classes
+      "classeId": 0, //int | ID de la classe dans laquelle le cours est dispensé (0 si est dispensé dans plusieures classes)
+      "classeCode": "", //int | Code de la classe (je pense qu'on a compris avec le temps que c'était vide si la cours était dispensé dans plusieures classes) 
+      "groupe": "T_NSINF-1", //string | Nom du groupe (si dispensé dans plusieures classes)
+      "groupeCode": "T_NSINF-1",//string | Code du groupe
+      "isFlexible": false, //bool | ???
+      "groupeId": 2004, //int | ID du groupe
+      "icone": "", //string | Depuis quand on peut avoir des icones ? 
+      "isModifie": false, //bool | ???
+      "contenuDeSeance": false, //bool | false même si du contenu est posté
+      "devoirAFaire": false, //bool | false même si un devoir est posté
+      "isAnnule": false //bool | Si le cours est annulé (franglais dégeu)
+    },
+    {
+      "id": 78905,
+      "text": "ANGLAIS LV1",
+      "matiere": "ANGLAIS LV1",
+      "codeMatiere": "AGL1",
+      "typeCours": "COURS",
+      "start_date": "2021-12-15 10:00",
+      "end_date": "2021-12-15 10:55",
+      "color": "#ff66cc",
+      "dispensable": false,
+      "dispense": 0,
+      "prof": "Florian L",
+      "salle": "SALLE 44",
+      "classe": "Terminale B",
+      "classeId": 44,
+      "classeCode": "TB",
+      "groupe": "",
+      "groupeCode": "",
+      "isFlexible": false,
+      "groupeId": 0,
+      "icone": "",
+      "isModifie": false,
+      "contenuDeSeance": false,
+      "devoirAFaire": false,
+      "isAnnule": false
     }
   ]
 }
