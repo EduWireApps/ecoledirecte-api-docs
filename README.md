@@ -22,6 +22,7 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation
 - [Servers.json](#server.json)
 
 * [Login](#login)
+* [Timeline](#timeline)
 
 ----
 ## Reference
@@ -67,7 +68,7 @@ Voici la structure détaillée d'un utilisateur (et commentée)
     "main": true, //bool | Indique si cet account est le principal (il peut en avoir plusieur comme avec un parent)
     "lastConnexion": "2021-10-05 18:28", //string | Date de dernière connexion à l'api via l'endpoint login (multiples connexions possibles)
     "civilite": "", 
-    "prenom": "Jhon", 
+    "prenom": "John", 
     "particule": "", 
     "nom": "DOE", 
     "email": "email@example.com", 
@@ -414,7 +415,7 @@ Response
       "lastCheck": "Mon Mar 16 2020 20:55:47 GMT+0100 (CET)", // ???
       "name": "api.ecoledirecte.com", //string | url du serveur
       "ip": "213.32.36.118", //string | ip du serveur
-      "status": 1,//int | 1 = en marche; 2 = off ???
+      "status": 1,//int | ???
       "responseTime": 338.23671800643206, //float | ping
       "weigth": 3, //int | ???
       "timeout": false, //bool | Si le serveur a timeout
