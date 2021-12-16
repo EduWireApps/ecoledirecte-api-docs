@@ -34,6 +34,17 @@ Dans presques toutes les requetes, on aura besoin d'un token utilisateur, il peu
 
 Si jamais des informations sont a envoyer en ``POST``, il faudra alors obligatoirement les envoyer en ``plain text / raw`` (indiqué le cas contraire)
 
+ATTENTION : Il faut penser à encoder certains characters en suivant ce modèle :
+```
+["%", "%25"]
+["&", "%26"]
+["+", "%2B"]
+["\\", "\\\\"]
+["\"", "\\\""]
+
+Exemple : Votre mot de passe est "JaimeLesK++kies&Ynotes" il faudra envoyer ca "JaimeLesK%2B%2Bies%26"
+```
+
 ### Codes erreur
 
 Liste de differents condes erreur trouvés au fil du temps avec leur description et des solutions pour fixer le pb
