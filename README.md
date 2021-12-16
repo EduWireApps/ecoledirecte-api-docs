@@ -516,7 +516,7 @@ Je sais pas qui aurait besoin de la timeline mais bon (:
 
 Request
 ```
-    Endpoint : https://api.ecoledirecte.com/v3/eleves/2306/timeline.awp?verbe=get
+    Endpoint : https://api.ecoledirecte.com/v3/eleves/{id}/timeline.awp?verbe=get
     Type of request : POST
     Body : 
         data={
@@ -579,7 +579,7 @@ Le titre est plutot clair non ?
 
 Request
 ```
-    Endpoint : https://api.ecoledirecte.com/v3/E/2306/emploidutemps.awp?verbe=get
+    Endpoint : https://api.ecoledirecte.com/v3/E/{id}/emploidutemps.awp?verbe=get
     Type of request : POST
     Body : 
         data={
