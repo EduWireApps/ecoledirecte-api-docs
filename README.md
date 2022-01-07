@@ -29,13 +29,20 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation
 ----
 ## Reference
 
-L'url de base utilisé est ``https://api.ecoledirecte.com/v3/`` (cette doc ne se base que sur la v3)
+L'url de base utilisé est ``https://api.ecoledirecte.com/v3/`` (cette doc ne se base que sur la v3).
 
-Dans presques toutes les requetes, on aura besoin d'un token utilisateur, il peut être obtenu par l'endpoint [login](#login)
 
-Si jamais des informations sont a envoyer en ``POST``, il faudra alors obligatoirement les envoyer en ``plain text / raw`` (indiqué le cas contraire)
+Si jamais des informations sont a envoyer en ``POST``, il faudra alors obligatoirement les envoyer en ``plain text / raw`` (indiqué le cas contraire).
 
-ATTENTION : Il faut penser à encoder certains characters en suivant ce modèle :
+### Requêtes authentifiées
+
+Cela concerne toutes les routes à l'exception de `/login`. Il faut passer un `Header` à la requête avec le token (voir [login](#login)):
+
+```
+X-Token: <token>
+```
+
+**ATTENTION :** Il faut penser à encoder certains characters en suivant ce modèle :
 ```
 ["%", "%25"]
 ["&", "%26"]
