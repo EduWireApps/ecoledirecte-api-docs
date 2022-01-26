@@ -538,11 +538,9 @@ Request
     Endpoint : https://api.ecoledirecte.com/v3/eleves/{id}/timeline.awp?verbe=get
     Type of request : POST
     Body : 
-        data={
-          "token": "token"
-        }
-    Headers : 
         None
+    Headers : 
+        X-Token: <token>
 ```
 
 Responses :
@@ -604,11 +602,10 @@ Request
         data={
           "dateDebut": "2021-12-15",
           "dateFin": "2021-12-15",
-          "avecTrous": false,
-          "token": "token"
+          "avecTrous": false
         }
     Headers : 
-        None
+        X-Token: <token>
 ```
 
 Responses :
@@ -685,11 +682,9 @@ Request
     Endpoint : https://api.ecoledirecte.com/v3/eleves/{id}/viescolaire.awp?verbe=get
     Type of request : POST
     Body : 
-        data={
-          "token": "token"
-        }
-    Headers : 
         None
+    Headers : 
+        X-Token: <token>
 ```
 
 Responses :
