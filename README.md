@@ -11,6 +11,16 @@ Si jamais cette documentation vient a être défaillante, merci de faire une iss
 
 ----
 
+## NOTE IMPORTANTE :
+
+Avant tout, merci d'ajouter un user-agent dans vos headers pour "faire croire" à ED que vous utilisez un "vrai" navigateur pour faire vos requetes !
+Dans toute la documentation, un useragent a été utilisé dans toutes les requêtes !
+
+Si vous n'avez pas d'idée en voici un :
+```
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
+```
+
 ## Index
 
 
