@@ -7,7 +7,7 @@ Bienvenue sur la documentation non officielle de l'api d'ecoledirecte.
 
 Si jamais cette documentation vient a être défaillante, merci de faire une issue avec les problèmes rencontrés
 
-(Si jamais vous avez des idées de formatage, hésitez pas à me le faire savoir [MaitreRouge#1712](https://discord.gg/V5GMMGJ9ep))
+(Si jamais vous avez des idées de formatage, hésitez pas à me le faire savoir [MaitreRouge#6916](https://discord.gg/EHM7jubSvE))
 
 ----
 
