@@ -100,8 +100,8 @@ Voici la structure détaillée d'un utilisateur (et commentée)
     "uid": "00000000000000000000000000000000", //string
     "identifiant": "Username", //string | Username du compte
     "typeCompte": "E", //string | Voir Type de compte dans la référence
-    "codeOgec": "000000000", //string | ???
-    "main": true, //bool | Indique si cet account est le principal (il peut en avoir plusieur comme avec un parent)
+    "codeOgec": "000000000", //string | Code de l'établissement
+    "main": true, //bool | Indique si ce compte est le compte principal de la famille(il peut en avoir plusieur comme avec un parent)
     "lastConnexion": "2021-10-05 18:28", //string | Date de dernière connexion à l'api via l'endpoint login (multiples connexions possibles)
     "civilite": "", 
     "prenom": "John", 
