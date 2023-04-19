@@ -95,12 +95,12 @@ Voici la structure détaillée d'un utilisateur (et commentée)
 
 ```js
 {
-    "idLogin": 1324, //int | ???
+    "idLogin": 1324, //int | Paramètre de cookie pour savoir si l'utilisateur est connecté via login/password
     "id": 1234,  //int | Numéro de compte
-    "uid": "00000000000000000000000000000000", //string
+    "uid": "00000000000000000000000000000000", //string | Il ne sert à rien lui aussi
     "identifiant": "Username", //string | Username du compte
     "typeCompte": "E", //string | Voir Type de compte dans la référence
-    "codeOgec": "000000000", //string | Code de l'établissement
+    "codeOgec": "000000000", //string | Code RNE de l'établissement scolaire du compte
     "main": true, //bool | Indique si ce compte est le compte principal de la famille(il peut en avoir plusieur comme avec un parent)
     "lastConnexion": "2021-10-05 18:28", //string | Date de dernière connexion à l'api via l'endpoint login (multiples connexions possibles)
     "civilite": "", 
@@ -113,17 +113,17 @@ Voici la structure détaillée d'un utilisateur (et commentée)
     "logoEtablissement": "",
     "couleurAgendaEtablissement": "#1796b0",
     "dicoEnLigneLeRobert": false,
-    "socketToken": "secret token", //string | ???
+    "socketToken": "secret token", //string | Websocket, à priori il n'est pas prit en compte concernant l'authentification (si on le change on ne sera pas déconnecté)
         "modules": [
           //Liste des modules, voir la référence pour plus
         ],
         "parametresIndividuels": {
-          "lsuPoilDansLaMainBorne1": "", // ???
-          "lsuPoilDansLaMainBorne2": "", // ???
-          "lsuPoilDansLaMainBorne3": "", // ???
-          "modeCalculLSU": "", // ???
+          "lsuPoilDansLaMainBorne1": "", // int | Paramètre parcoursup
+          "lsuPoilDansLaMainBorne2": "", // int | Paramètre parcoursup
+          "lsuPoilDansLaMainBorne3": "", // int | Paramètre parcoursup
+          "modeCalculLSU": "", // ??? | Paramètre de recommandation parcoursup
           "isQrcode": false, // ???
-          "modeAccessibiliteVisuelle": false,
+          "accessibilitéVisuelle": false, // bool | Pour les personnes malvoyantes, une police spéciale est mise en place
           "typeSaisieNotesDefaut": "",
           "nbJoursMaxRenduDevoirCDT": "",
           "typeViewCDTDefaut": ""
