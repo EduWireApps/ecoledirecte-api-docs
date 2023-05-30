@@ -37,6 +37,8 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation
 * [Timeline](#timeline)
 * [Emploi du temps](#emploi-du-temps)
 * [Vie scolaire](#vie-scolaire)
+* [Carnet de correspondance](#carnet-de-correspondance)
+* [Documents administratifs](#documents-administratifs)
 
 ----
 ## Reference
@@ -760,3 +762,75 @@ Succès
    }
 }
 ```
+
+### Carnet de correspondance
+
+Permet d'obtenir une liste des correspondances.
+
+Requête :
+```
+POST /v3/eleves/{eleve.id}/eleveCarnetCorrespondance.awp?verbe=get
+Pas de paramètres
+```
+
+Réponse :
+```
+{
+	...,
+	"data": {
+		"correspondances": [
+			?
+		],
+		"suivis": [
+			?
+		]
+	}
+}
+```
+
+### Documents administratifs
+
+Permet d'obtenir la liste des documents administratifs associées à une année scolaire, ou à l'année actuelle.
+
+Requête :
+```
+POST /v3/elevesDocuments.awp?verbe=get&archive=2020-2021
+Pour utiliser l'année actuellle :
+ - archive=
+Pour spécifier une année précise :
+ - archive=YYYY-YYYY
+```
+
+Réponse :
+```
+{
+	...,
+	"data": {
+		"factures": [?],
+		"notes": [documents],
+		"viescolaire": [?],
+		"administratifs": [documents],
+		"listesPiecesAVerser": {
+			"listePieces": [],
+			"personnes": [{"id": 1234, "nom": "…", "prenom": "…", "type": "E"}],
+			"pieces": [],
+			"televersements": []
+		}
+	}
+}
+```
+
+Document :
+```
+{
+	"id": int,
+	"libelle": string,
+	"idEleve": int,
+	"date": "YYYY-MM-DD",
+	"type": "Note" | "Doc" | "",
+	"signatureDemandee": boolean,
+	"signature": {?}
+}
+```
+
+Les documents peuvent être téléchargés via la route de téléchargement.
