@@ -9,29 +9,21 @@ Si jamais cette documentation vient a être défaillante, merci de faire une iss
 
 (Si jamais vous avez des idées de formatage, hésitez pas à me le faire savoir [MaitreRouge#6916](https://discord.gg/EHM7jubSvE))
 
-----
-
-## NOTE IMPORTANTE :
-
-Avant tout, merci d'ajouter un user-agent dans vos headers pour "faire croire" à ED que vous utilisez un "vrai" navigateur pour faire vos requetes !
-Dans toute la documentation, un useragent a été utilisé dans toutes les requêtes !
-
-Il faut savoir que si vous utilisez un useragent pour obtenir un token, il faudra utiliser le même useragent avec ce token. Si jamais un autre UA est utilisé, le token sera invlidé.
-
-Si vous n'avez pas d'idée en voici un :
-```
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
-```
 
 ## Index
 
 
-Juste un rapide sommaire pour naviguer plus facilement dans la documentation
+Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
+La documentation est séparée en plusieurs fichiers, chacun dédié à un concept.
 
-- [Codes erreur](#codes-erreur)
-- [Account objects](#accounts-objects)
-    - [Modules](#account-modules)
-- [Servers.json](#server.json)
+- [Format de la documentation](#format-de-la-documentation)
+- [Utilisation de l'API](#utilisation-de-lapi)
+  - [Requêtes authentifiées](#requêtes-authentifiées)
+  - [Codes erreur](#codes-erreur)
+
++ [Account objects](#accounts-objects)
+  + [Modules](#account-modules)
++ [Servers.json](#server.json)
 
 * [Login](#login)
 * [Timeline](#timeline)
@@ -40,13 +32,54 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation
 * [Carnet de correspondance](#carnet-de-correspondance)
 * [Documents administratifs](#documents-administratifs)
 
-----
-## Reference
 
-L'url de base utilisé est ``https://api.ecoledirecte.com/v3/`` (cette doc ne se base que sur la v3).
+## Format de la documentation
+
+La base de l'api élève est ``https://api.ecoledirecte.com/v3/``. Toutes les URLs relatives sont relatives à cette base.
+
+Les requêtes prennent généralement des paramètres soit en *query string* dans l'URL soit en JSON dans le corps de la requête. Ces paramètres sont encodés au format `application/x-www-form-urlencoded`, bien que cet encodage soit totalement optionnel pour le corps de la requête.
+
+**Note** : On peut utiliser la fonction `encodeURIComponent()` en JavaScript et `urllib.parse.quote()` en Python pour encoder ces paramètres.
+
+**Exemple** : Votre mot de passe est `JaimeLesK++kies&Ynotes` il faudra envoyer `JaimeLesK%2B%2Bies%26`
+
+**Important** : Toutes les requêtes sont fait en `POST`. Elles prennent aussi un paramètre `verbe` utilisé pour spécifier le verbe HTTP. Ici ce paramètre est omis et la méthode HTTP indiquée est en réalité la valeur du paramètre `verbe`.
+
+Les réponses suivent généralement le format suivant, et tout schéma de réponse donné correspond en réalité à celui de la valeur de `data` :
+
+```jsonc
+{
+	"host": "HTTP<n° serveur>",
+	"code": 200,
+	"token": "<token>",
+	"message": "", // Rarement présent
+	"data": {...},
+}
+```
+
+### Exemple
+
+__GET__ `/v3/eleves/{eleve.id}/messages/{message.id}.awp`
+
+Avec les paramètres de recherche `mode=destinataire` et les paramètres en JSON `{ "anneeMessages": "2021-2022" }`
+
+Correspond à la requête
+
+__POST__ `/v3/E/{élève.id}/visios.awp?verbe=get&mode=destinataire` avec le corps `data={ "anneeMessages": "2021-2022" }` ou bien sous forme encodée `data=%7B%20%22anneeMessages%22%3A%20%222021-2022%22%20%7D`
 
 
-Si jamais des informations sont a envoyer en ``POST``, il faudra alors obligatoirement les envoyer en ``plain text / raw`` (indiqué le cas contraire).
+## Utilisation de l'API
+
+### NOTE IMPORTANTE :
+
+Avant tout, merci d'ajouter un user-agent dans vos headers pour "faire croire" à ED que vous utilisez un "vrai" navigateur pour faire vos requetes !
+
+Il faut savoir que si vous utilisez un useragent pour obtenir un token, il faudra utiliser le même useragent avec ce token. Si jamais un autre UA est utilisé, le token sera invlidé.
+
+Si vous n'avez pas d'idée en voici un :
+```
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
+```
 
 ### Requêtes authentifiées
 
@@ -56,20 +89,10 @@ Cela concerne toutes les routes à l'exception de `/login`. Il faut passer un `H
 X-Token: <token>
 ```
 
-**ATTENTION :** Il faut penser à encoder certains characters en suivant ce modèle :
-```
-["%", "%25"]
-["&", "%26"]
-["+", "%2B"]
-["\\", "\\\\"]
-["\"", "\\\""]
-
-Exemple : Votre mot de passe est "JaimeLesK++kies&Ynotes" il faudra envoyer ca "JaimeLesK%2B%2Bies%26"
-```
 
 ### Codes erreur
 
-Liste de differents condes erreur trouvés au fil du temps avec leur description et des solutions pour fixer le pb
+Liste de differents codes erreur trouvés au fil du temps avec leur description et des solutions pour fixer le pb
 
 *Note : Les requêtes renveront (sauf grosse erreur côté serveur avec une 5xx) toujours dans leur header un code 200, même en cas d'erreur*
 
@@ -90,6 +113,8 @@ Code: 40129
 Problème: Format JSON invalide
 Solution: Vérifier que le body de la requete a bien été envoyé en raw (ou plain text) et qu'il respecte le formatage donné dans la documentation
 ```
+
+
 
 ### Accounts objects
 
