@@ -116,6 +116,121 @@ Solution: Vérifier que le body de la requete a bien été envoyé en raw (ou pl
 
 
 
+
+### Servers.json
+
+EcoleDirecte n'utilise pas qu'un seul serveur, il est possible d'obtenir des informations sur les serveurs du site en une seule requete.
+La raison pour laquelle cette partie est dans la partie référence c'est car cela n'a pas trop d'utilitée a vraiment parler...
+
+*Notes : Il semblerait que le fichier soit statique :c (les pings sont les mêmes depuis que j'ai commecé la doc)*
+
+Request
+```
+    Endpoint: https://www.ecoledirecte.com/EDCluster/servers.json
+    Endpoint information: On peut noter que cet endpoit prends un argumenent get, "c" qui semble optonnel jusqu'a présent
+    Type of request: GET
+    Body:
+        None
+    Headers:
+        None
+```
+
+Response
+```js
+{
+  "servers": [ //On va recevoir une liste d'objets comme celui ci dessous
+    {
+      "profile": "API", //string | Alterne enre API / APIP et ALL
+      "lastCheck": "Mon Mar 16 2020 20:55:47 GMT+0100 (CET)", // ???
+      "name": "api.ecoledirecte.com", //string | url du serveur
+      "ip": "213.32.36.118", //string | ip du serveur
+      "status": 1,//int | ???
+      "responseTime": 338.23671800643206, //float | ping
+      "weigth": 3, //int | ???
+      "timeout": false, //bool | Si le serveur a timeout
+      "version": "Maj du 16/03/2020 à 16h27", //string, version logicielle du serveur
+      "bdTested": "95", //string | ???
+      "elapsedTime": 338, //int | ???
+      "timingPhases": { //Object representatant la latence avec des détails
+        "wait": 78.6058100014925,
+        "dns": 3.143696002662182,
+        "tcp": 7.182815000414848,
+        "firstByte": 249.2012169957161,
+        "download": 0.10318000614643097,
+        "total": 338.23671800643206
+      },
+      "timings": {
+        "socket": 78.6058100014925,
+        "lookup": 81.74950600415468,
+        "connect": 88.93232100456953,
+        "response": 338.1335380002856,
+        "end": 338.23671800643206
+      },
+      "httptested": "HTTP76",
+      "nbConnexions": 1,//int | Nombre d'utilisateur connectés ??
+      "errorCode": "ESOCKETTIMEDOUT"
+    },
+```
+
+
+Ici se trouve toute la documentation, assurez-vous d'avoir lu la référence avant de commencer 
+
+## Login
+
+Request
+```
+    Endpoint : https://api.ecoledirecte.com/v3/login.awp
+    Type of request : POST
+    Body : 
+        data={
+            "identifiant": "Username",
+            "motdepasse": "Password"
+        }
+    Headers : 
+        None
+```
+
+Responses :
+
+Succès
+```js
+{
+  "code": 200,
+  "token": "Super secret token here", //Token de connexion (+3100 long)
+  "message": "", //Utilisé pour afficher des messages d'erreur
+  "data": {
+    "accounts": [
+        //Liste d'utilisateur liés au compte, voir la référence pour plus
+    ]
+  }
+}
+```
+
+Erreur (Mot de passe invalide)
+```js
+{
+  "code": 505, 
+  "token": "", //Toujours vide en cas d'erreur
+  "message": "Mot de passe invalide !",
+  "data": {
+    "accounts": []
+  }
+}
+```
+
+Erreur (Utilisateur introuvable)
+```js
+{
+  "code": 505,
+  "token": "", //Toujours vide en cas d'erreur
+  "message": "Identifiant et/ou mot de passe invalide !",
+  "data": {
+    "accounts": []
+  }
+}
+```
+
+
 ### Accounts objects
 
 Voici la structure détaillée d'un utilisateur (et commentée)
@@ -173,6 +288,9 @@ Voici la structure détaillée d'un utilisateur (et commentée)
         }
       }
 ```
+
+
+## Élève
 
 ### Account modules
 
@@ -450,123 +568,8 @@ Voici la liste des modules qui ont été documentés jusqu'a présent
     "badge": 0,
     "params": {}
 }
-
 ```
 
-### Servers.json
-
-EcoleDirecte n'utilise pas qu'un seul serveur, il est possible d'obtenir des informations sur les serveurs du site en une seule requete.
-La raison pour laquelle cette partie est dans la partie référence c'est car cela n'a pas trop d'utilitée a vraiment parler...
-
-*Notes : Il semblerait que le fichier soit statique :c (les pings sont les mêmes depuis que j'ai commecé la doc)*
-
-Request
-```
-    Endpoint: https://www.ecoledirecte.com/EDCluster/servers.json
-    Endpoint information: On peut noter que cet endpoit prends un argumenent get, "c" qui semble optonnel jusqu'a présent
-    Type of request: GET
-    Body:
-        None
-    Headers:
-        None
-```
-
-Response
-```js
-{
-  "servers": [ //On va recevoir une liste d'objets comme celui ci dessous
-    {
-      "profile": "API", //string | Alterne enre API / APIP et ALL
-      "lastCheck": "Mon Mar 16 2020 20:55:47 GMT+0100 (CET)", // ???
-      "name": "api.ecoledirecte.com", //string | url du serveur
-      "ip": "213.32.36.118", //string | ip du serveur
-      "status": 1,//int | ???
-      "responseTime": 338.23671800643206, //float | ping
-      "weigth": 3, //int | ???
-      "timeout": false, //bool | Si le serveur a timeout
-      "version": "Maj du 16/03/2020 à 16h27", //string, version logicielle du serveur
-      "bdTested": "95", //string | ???
-      "elapsedTime": 338, //int | ???
-      "timingPhases": { //Object representatant la latence avec des détails
-        "wait": 78.6058100014925,
-        "dns": 3.143696002662182,
-        "tcp": 7.182815000414848,
-        "firstByte": 249.2012169957161,
-        "download": 0.10318000614643097,
-        "total": 338.23671800643206
-      },
-      "timings": {
-        "socket": 78.6058100014925,
-        "lookup": 81.74950600415468,
-        "connect": 88.93232100456953,
-        "response": 338.1335380002856,
-        "end": 338.23671800643206
-      },
-      "httptested": "HTTP76",
-      "nbConnexions": 1,//int | Nombre d'utilisateur connectés ??
-      "errorCode": "ESOCKETTIMEDOUT"
-    },
-```
-
-----
-## Documentation
-
-Ici se trouve toute la documentation, assurez-vous d'avoir lu la référence avant de commencer 
-
-### Login
-
-Request
-```
-    Endpoint : https://api.ecoledirecte.com/v3/login.awp
-    Type of request : POST
-    Body : 
-        data={
-            "identifiant": "Username",
-            "motdepasse": "Password"
-        }
-    Headers : 
-        None
-```
-
-Responses :
-
-Succès
-```js
-{
-  "code": 200,
-  "token": "Super secret token here", //Token de connexion (+3100 long)
-  "message": "", //Utilisé pour afficher des messages d'erreur
-  "data": {
-    "accounts": [
-        //Liste d'utilisateur liés au compte, voir la référence pour plus
-    ]
-  }
-}
-```
-
-Erreur (Mot de passe invalide)
-```js
-{
-  "code": 505, 
-  "token": "", //Toujours vide en cas d'erreur
-  "message": "Mot de passe invalide !",
-  "data": {
-    "accounts": []
-  }
-}
-```
-
-Erreur (Utilisateur introuvable)
-```js
-{
-  "code": 505,
-  "token": "", //Toujours vide en cas d'erreur
-  "message": "Identifiant et/ou mot de passe invalide !",
-  "data": {
-    "accounts": []
-  }
-}
-```
 
 ### Timeline
 
