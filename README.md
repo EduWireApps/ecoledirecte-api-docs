@@ -20,17 +20,17 @@ La documentation est séparée en plusieurs fichiers, chacun dédié à un conce
 - [Utilisation de l'API](#utilisation-de-lapi)
   - [Requêtes authentifiées](#requêtes-authentifiées)
   - [Codes erreur](#codes-erreur)
-
-+ [Account objects](#accounts-objects)
-  + [Modules](#account-modules)
-+ [Servers.json](#server.json)
+  - [Servers.json](#servers.json)
 
 * [Login](#login)
-* [Timeline](#timeline)
-* [Emploi du temps](#emploi-du-temps)
-* [Vie scolaire](#vie-scolaire)
-* [Carnet de correspondance](#carnet-de-correspondance)
-* [Documents administratifs](#documents-administratifs)
+    * [Account objects](#accounts-objects)
+* [Élève](#élève)
+    * [Modules](#account-modules)
+    * [Timeline](#timeline)
+    * [Emploi du temps](#emploi-du-temps)
+    * [Vie scolaire](#vie-scolaire)
+    * [Carnet de correspondance](#carnet-de-correspondance)
+    * [Documents administratifs](#documents-administratifs)
 
 
 ## Format de la documentation
