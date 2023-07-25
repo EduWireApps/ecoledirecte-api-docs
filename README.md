@@ -173,7 +173,7 @@ Response
 ```
 
 
-Ici se trouve toute la documentation, assurez-vous d'avoir lu la référence avant de commencer 
+Ici se trouve toute la documentation, assurez-vous d'avoir lu la référence avant de commencer
 
 ## Login
 
@@ -181,12 +181,12 @@ Request
 ```
     Endpoint : https://api.ecoledirecte.com/v3/login.awp
     Type of request : POST
-    Body : 
+    Body :
         data={
             "identifiant": "Username",
             "motdepasse": "Password"
         }
-    Headers : 
+    Headers :
         None
 ```
 
@@ -209,7 +209,7 @@ Succès
 Erreur (Mot de passe invalide)
 ```js
 {
-  "code": 505, 
+  "code": 505,
   "token": "", //Toujours vide en cas d'erreur
   "message": "Mot de passe invalide !",
   "data": {
@@ -245,13 +245,13 @@ Voici la structure détaillée d'un utilisateur (et commentée)
     "codeOgec": "000000000", //string | Code RNE de l'établissement scolaire du compte
     "main": true, //bool | Indique si ce compte est le compte principal de la famille(il peut en avoir plusieur comme avec un parent)
     "lastConnexion": "2021-10-05 18:28", //string | Date de dernière connexion à l'api via l'endpoint login (multiples connexions possibles)
-    "civilite": "", 
-    "prenom": "John", 
-    "particule": "", 
-    "nom": "DOE", 
-    "email": "email@example.com", 
-    "anneeScolaireCourante": "2050-2051", 
-    "nomEtablissement": "Github", 
+    "civilite": "",
+    "prenom": "John",
+    "particule": "",
+    "nom": "DOE",
+    "email": "email@example.com",
+    "anneeScolaireCourante": "2050-2051",
+    "nomEtablissement": "Github",
     "logoEtablissement": "",
     "couleurAgendaEtablissement": "#1796b0",
     "dicoEnLigneLeRobert": false,
@@ -579,9 +579,9 @@ Request
 ```
     Endpoint : https://api.ecoledirecte.com/v3/eleves/{id}/timeline.awp?verbe=get
     Type of request : POST
-    Body : 
+    Body :
         None
-    Headers : 
+    Headers :
         X-Token: <token>
 ```
 
@@ -599,7 +599,7 @@ Succès
       "typeElement": "Note", //String | Type de l'event (Note / Abscence / Document / ???)
       "idElement": 0, // Int | ???
       "titre": "Nouvelle évaluation", //String | Titre de l'evenement
-      "soustitre": "ED.PHYSIQUE & SPORT.", 
+      "soustitre": "ED.PHYSIQUE & SPORT.",
       "contenu": "natation du 15/11/2021" //String | Contenu de l'evenement
     },
     {
@@ -632,7 +632,7 @@ Succès
 
 ### Emploi du temps
 
-Le titre est plutot clair non ? 
+Le titre est plutot clair non ?
 
 *Note : Si jamais le temps est incorrect alors data sera juste un array vide*
 
@@ -640,13 +640,13 @@ Request
 ```
     Endpoint : https://api.ecoledirecte.com/v3/E/{id}/emploidutemps.awp?verbe=get
     Type of request : POST
-    Body : 
+    Body :
         data={
           "dateDebut": "2021-12-15",
           "dateFin": "2021-12-15",
           "avecTrous": false
         }
-    Headers : 
+    Headers :
         X-Token: <token>
 ```
 
@@ -662,7 +662,7 @@ Succès
     {
       "id": 46234, //int | Semble être un identifiant unique du cours
       "text": "NUMERIQUE SC.INFORM.", //string | Nom du cours (peut diférer de la matière)
-      "matiere": "NUMERIQUE SC.INFORM.", 
+      "matiere": "NUMERIQUE SC.INFORM.",
       "codeMatiere": "NSINF", //string | Code matière interne au service ED
       "typeCours": "COURS", //string | Semble varier (COURS / PERMANENCE)
       "start_date": "2021-12-15 08:00",
@@ -674,12 +674,12 @@ Succès
       "salle": "SALLE 11 INFO",
       "classe": "", //string | vide si est dispensé dans plusieures classes
       "classeId": 0, //int | ID de la classe dans laquelle le cours est dispensé (0 si est dispensé dans plusieures classes)
-      "classeCode": "", //int | Code de la classe (je pense qu'on a compris avec le temps que c'était vide si la cours était dispensé dans plusieures classes) 
+      "classeCode": "", //int | Code de la classe (je pense qu'on a compris avec le temps que c'était vide si la cours était dispensé dans plusieures classes)
       "groupe": "T_NSINF-1", //string | Nom du groupe (si dispensé dans plusieures classes)
       "groupeCode": "T_NSINF-1",//string | Code du groupe
       "isFlexible": false, //bool | ???
       "groupeId": 2004, //int | ID du groupe
-      "icone": "", //string | Depuis quand on peut avoir des icones ? 
+      "icone": "", //string | Depuis quand on peut avoir des icones ?
       "isModifie": false, //bool | ???
       "contenuDeSeance": false, //bool | false même si du contenu est posté
       "devoirAFaire": false, //bool | false même si un devoir est posté
@@ -723,9 +723,9 @@ Request
 ```
     Endpoint : https://api.ecoledirecte.com/v3/eleves/{id}/viescolaire.awp?verbe=get
     Type of request : POST
-    Body : 
+    Body :
         None
-    Headers : 
+    Headers :
         X-Token: <token>
 ```
 
