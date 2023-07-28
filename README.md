@@ -20,7 +20,7 @@ La documentation est séparée en plusieurs fichiers, chacun dédié à un conce
 - [Utilisation de l'API](#utilisation-de-lapi)
   - [Requêtes authentifiées](#requêtes-authentifiées)
   - [Codes erreur](#codes-erreur)
-  - [Servers.json](#servers.json)
+  - [Servers.json](#serversjson)
 
 * [Login](#login)
     * [Account objects](#accounts-objects)
