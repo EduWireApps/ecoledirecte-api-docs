@@ -177,22 +177,21 @@ Ici se trouve toute la documentation, assurez-vous d'avoir lu la référence ava
 
 ## Login
 
-Request
-```
-    Endpoint : https://api.ecoledirecte.com/v3/login.awp
-    Type of request : POST
-    Body :
-        data={
-            "identifiant": "Username",
-            "motdepasse": "Password"
-        }
-    Headers :
-        None
+__POST__ `/v3/login.awp`
+
+Data en body :
+```json
+{
+    "identifiant": "Username",
+    "motdepasse": "Password"
+}
 ```
 
-Responses :
+Différents exemples de réponses complètes. Elles suivent le modèle de réponse donné dans la référence.
 
-Succès
+<details>
+<summary>Succès</summary>
+
 ```js
 {
   "code": 200,
@@ -205,8 +204,11 @@ Succès
   }
 }
 ```
+</details>
 
-Erreur (Mot de passe invalide)
+<details>
+<summary>Erreur (Mot de passe invalide)</summary>
+
 ```js
 {
   "code": 505,
@@ -217,8 +219,11 @@ Erreur (Mot de passe invalide)
   }
 }
 ```
+</details>
 
-Erreur (Utilisateur introuvable)
+<details>
+<summary>Erreur (Utilisateur introuvable)</summary>
+
 ```js
 {
   "code": 505,
@@ -229,11 +234,12 @@ Erreur (Utilisateur introuvable)
   }
 }
 ```
+</details>
 
 
 ### Accounts objects
 
-Voici la structure détaillée d'un utilisateur (et commentée)
+Voici la structure détaillée d'un utilisateur (et commentée) qui est contenu sous la clé `data` de la réponse.
 
 ```js
 {
@@ -574,25 +580,11 @@ Voici la liste des modules qui ont été documentés jusqu'a présent
 
 Je sais pas qui aurait besoin de la timeline mais bon (:
 
-Request
-```
-    Endpoint : https://api.ecoledirecte.com/v3/eleves/{id}/timeline.awp?verbe=get
-    Type of request : POST
-    Body :
-        None
-    Headers :
-        X-Token: <token>
-```
+__GET__ `/v3/eleves/{id}/timeline.awp`
 
-Responses :
-
-Succès
+Data dans la réponses :
 ```js
-{
-  "code": 200,
-  "token": "Super secret token here" //String | Token de connexion
-  "host": "HTTP186", // ???
-  "data": [ //Liste des évènements relatif au compte (quelques exemples d'évènement peuvent être trouvés)
+[ //Liste des évènements relatif au compte (quelques exemples d'évènement peuvent être trouvés)
     {
       "date": "2021-12-05", //String | Date de l'evènement
       "typeElement": "Note", //String | Type de l'event (Note / Abscence / Document / ???)
@@ -625,8 +617,7 @@ Succès
       "soustitre": "",
       "contenu": "Certificat de scolarité"
     }
-  ]
-}
+]
 ```
 
 ### Emploi du temps
@@ -635,29 +626,20 @@ Le titre est plutot clair non ?
 
 *Note : Si jamais le temps est incorrect alors data sera juste un array vide*
 
-Request
-```
-    Endpoint : https://api.ecoledirecte.com/v3/E/{id}/emploidutemps.awp?verbe=get
-    Type of request : POST
-    Body :
-        data={
-          "dateDebut": "2021-12-15",
-          "dateFin": "2021-12-15",
-          "avecTrous": false
-        }
-    Headers :
-        X-Token: <token>
-```
+__GET__ `/v3/E/{id}/emploidutemps.awp`
 
-Responses :
-
-Succès
-```js
+Data en body :
+```json
 {
-  "code": 200,
-  "token": "Super secret token here" //String | Token de connexion
-  "host": "HTTP186", // ???
-  "data": [
+  "dateDebut": "2021-12-15",
+  "dateFin": "2021-12-15",
+  "avecTrous": false
+}
+```
+
+Data dans la réponse :
+```js
+[
     {
       "id": 46234, //int | Semble être un identifiant unique du cours
       "text": "NUMERIQUE SC.INFORM.", //string | Nom du cours (peut diférer de la matière)
@@ -710,33 +692,18 @@ Succès
       "devoirAFaire": false,
       "isAnnule": false
     }
-  ]
-}
+]
 ```
 
 ### Vie scolaire
 
 Endpoint qui sert a afficher les données sur la page vie de classe
 
-Request
-```
-    Endpoint : https://api.ecoledirecte.com/v3/eleves/{id}/viescolaire.awp?verbe=get
-    Type of request : POST
-    Body :
-        None
-    Headers :
-        X-Token: <token>
-```
+__GET__ `/v3/eleves/{id}/viescolaire.awp`
 
-Responses :
-
-Succès
+Data dans la réponse :
 ```js
 {
-   "code":200,
-   "token":"Super secret token here",
-   "host":"HTTP74",
-   "data":{
       "absencesRetards":[
          {
             "id":2936, //int | Identifiant interne de l'abscence / retard
@@ -786,7 +753,6 @@ Succès
          "encouragementParQui":false,
          "encouragementCommentaire":false
       }
-   }
 }
 ```
 
@@ -794,24 +760,17 @@ Succès
 
 Permet d'obtenir une liste des correspondances.
 
-Requête :
-```
-POST /v3/eleves/{eleve.id}/eleveCarnetCorrespondance.awp?verbe=get
-Pas de paramètres
-```
+__GET__ `/v3/eleves/{id}/eleveCarnetCorrespondance.awp`
 
-Réponse :
-```
+Data dans la réponse :
+```jsonc
 {
-	...,
-	"data": {
 		"correspondances": [
-			?
+			// ?
 		],
 		"suivis": [
-			?
+			// ?
 		]
-	}
 }
 ```
 
@@ -819,20 +778,15 @@ Réponse :
 
 Permet d'obtenir la liste des documents administratifs associées à une année scolaire, ou à l'année actuelle.
 
-Requête :
-```
-POST /v3/elevesDocuments.awp?verbe=get&archive=2020-2021
-Pour utiliser l'année actuellle :
- - archive=
-Pour spécifier une année précise :
- - archive=YYYY-YYYY
-```
+__GET__ `/v3/elevesDocuments.awp?verbe=get&archive=2020-2021`
 
-Réponse :
+Paramètres de recherche :
+ - `archive=` pour l'année actuelle
+ - `archive=YYYY-YYYY` pour spécifier une année précise
+
+Data dans la réponse :
 ```
 {
-	...,
-	"data": {
 		"factures": [?],
 		"notes": [documents],
 		"viescolaire": [?],
@@ -843,11 +797,10 @@ Réponse :
 			"pieces": [],
 			"televersements": []
 		}
-	}
 }
 ```
 
-Document :
+Type des objets document :
 ```
 {
 	"id": int,
@@ -860,4 +813,4 @@ Document :
 }
 ```
 
-Les documents peuvent être téléchargés via la route de téléchargement.
+Les documents peuvent être téléchargés via la route de téléchargement grâce à leur id.
