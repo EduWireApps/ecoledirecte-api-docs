@@ -124,18 +124,9 @@ La raison pour laquelle cette partie est dans la partie référence c'est car ce
 
 *Notes : Il semblerait que le fichier soit statique :c (les pings sont les mêmes depuis que j'ai commecé la doc)*
 
-Request
-```
-    Endpoint: https://www.ecoledirecte.com/EDCluster/servers.json
-    Endpoint information: On peut noter que cet endpoit prends un argumenent get, "c" qui semble optonnel jusqu'a présent
-    Type of request: GET
-    Body:
-        None
-    Headers:
-        None
-```
+Voici le lien du fichier : [https://www.ecoledirecte.com/EDCluster/servers.json](https://www.ecoledirecte.com/EDCluster/servers.json)
 
-Response
+Échantillon du fichier :
 ```js
 {
   "servers": [ //On va recevoir une liste d'objets comme celui ci dessous
@@ -172,6 +163,7 @@ Response
     },
 ```
 
+----
 
 Ici se trouve toute la documentation, assurez-vous d'avoir lu la référence avant de commencer
 
