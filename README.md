@@ -43,7 +43,7 @@ Les requêtes prennent généralement des paramètres soit en *query string* dan
 
 **Exemple** : Votre mot de passe est `JaimeLesK++kies&Ynotes` il faudra envoyer `JaimeLesK%2B%2Bies%26`
 
-**Important** : Toutes les requêtes sont fait en `POST`. Elles prennent aussi un paramètre `verbe` utilisé pour spécifier le verbe HTTP. Ici ce paramètre est omis et la méthode HTTP indiquée est en réalité la valeur du paramètre `verbe`.
+**Important** : Toutes les requêtes sont faites en `POST`. Elles prennent aussi un paramètre `verbe` utilisé pour spécifier le verbe HTTP. Ici ce paramètre est omis et la méthode HTTP indiquée est en réalité la valeur du paramètre `verbe` (l'exemple est plus clair).
 
 Les réponses suivent généralement le format suivant, et tout schéma de réponse donné correspond en réalité à celui de la valeur de `data` :
 
@@ -65,7 +65,7 @@ Avec les paramètres de recherche `mode=destinataire` et les paramètres en JSON
 
 Correspond à la requête
 
-__POST__ `/v3/E/{élève.id}/visios.awp?verbe=get&mode=destinataire` avec le corps `data={ "anneeMessages": "2021-2022" }` ou bien sous forme encodée `data=%7B%20%22anneeMessages%22%3A%20%222021-2022%22%20%7D`
+__POST__ `https://api.ecoledirecte.com/v3/E/{élève.id}/visios.awp?verbe=get&mode=destinataire` avec le corps `data={ "anneeMessages": "2021-2022" }` ou bien sous forme encodée `data=%7B%20%22anneeMessages%22%3A%20%222021-2022%22%20%7D`
 
 
 ## Utilisation de l'API
