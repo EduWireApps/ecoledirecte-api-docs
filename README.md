@@ -14,7 +14,6 @@ Si jamais cette documentation vient a être défaillante, merci de faire une iss
 
 
 Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
-La documentation est séparée en plusieurs fichiers, chacun dédié à un concept.
 
 - [Format de la documentation](#format-de-la-documentation)
 - [Utilisation de l'API](#utilisation-de-lapi)
