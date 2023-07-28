@@ -289,9 +289,6 @@ Voici la structure détaillée d'un utilisateur (et commentée)
       }
 ```
 
-
-## Élève
-
 ### Account modules
 
 Ces modules là sont ceux disponibles dans l'object account, ils ressemblent à ça :
@@ -570,6 +567,8 @@ Voici la liste des modules qui ont été documentés jusqu'a présent
 }
 ```
 
+
+## Élève
 
 ### Timeline
 
