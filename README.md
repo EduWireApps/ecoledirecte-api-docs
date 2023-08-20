@@ -174,7 +174,9 @@ Data en body :
 ```json
 {
     "identifiant": "Username",
-    "motdepasse": "Password"
+    "motdepasse": "Password",
+	"isRelogin": false,
+	"uuid": ""
 }
 ```
 
@@ -573,13 +575,13 @@ Je sais pas qui aurait besoin de la timeline mais bon (:
 
 __GET__ `/v3/eleves/{id}/timeline.awp`
 
-Data dans la réponses :
+Data dans la réponse :
 ```js
 [ //Liste des évènements relatif au compte (quelques exemples d'évènement peuvent être trouvés)
     {
       "date": "2021-12-05", //String | Date de l'evènement
-      "typeElement": "Note", //String | Type de l'event (Note / Abscence / Document / ???)
-      "idElement": 0, // Int | ???
+      "typeElement": "Note", //String | Type de l'event (Note / Abscence / Document / Messagerie / VieScolaire / ...)
+      "idElement": 0, // identifiant du message / evt de vie scolaire / document associé
       "titre": "Nouvelle évaluation", //String | Titre de l'evenement
       "soustitre": "ED.PHYSIQUE & SPORT.",
       "contenu": "natation du 15/11/2021" //String | Contenu de l'evenement
@@ -609,6 +611,37 @@ Data dans la réponses :
       "contenu": "Certificat de scolarité"
     }
 ]
+```
+
+### Timeline commune
+
+__GET__ `/v3/E/{id}/timelineAccueilCommun.awp`
+
+C'est la timeline de l'établissement que tous les élèves voient. Elle inclue les post-its.
+
+Data dans la réponse :
+```jsonc
+{
+	"evenements": [], // ?
+	"postits": [{
+		"id": int,
+		"type": string, // "info", ?
+		"contenu": string // HTML encodé en base64
+		"dateCreation": "JJ/MM/AAAA",
+		"dateDebut": "JJ/MM/AAAA",
+		"dateFin": "JJ/MM/AAAA",
+		"cible": [], // ?
+		"ciblesEtab": [], // ?
+		"auteur": {
+			"civilite": string, // M.
+			"prenom": string,
+			"particule": string,
+			"nom": string,
+			"type": string, // "A", ?
+			"id": string, // Identifiant de la personne
+		},
+	}],
+}
 ```
 
 ### Emploi du temps
@@ -769,11 +802,11 @@ Data dans la réponse :
 
 Permet d'obtenir la liste des documents administratifs associées à une année scolaire, ou à l'année actuelle.
 
-__GET__ `/v3/elevesDocuments.awp?verbe=get&archive=2020-2021`
+__GET__ `/v3/elevesDocuments.awp`
 
 Paramètres de recherche :
  - `archive=` pour l'année actuelle
- - `archive=YYYY-YYYY` pour spécifier une année précise
+ - `archive=AAAA-AAAA` pour spécifier une année précise
 
 Data dans la réponse :
 ```
@@ -797,7 +830,7 @@ Type des objets document :
 	"id": int,
 	"libelle": string,
 	"idEleve": int,
-	"date": "YYYY-MM-DD",
+	"date": "AAAA-MM-JJ",
 	"type": "Note" | "Doc" | "",
 	"signatureDemandee": boolean,
 	"signature": {?}
