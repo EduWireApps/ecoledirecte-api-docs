@@ -23,9 +23,10 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
 
 * [Login](#login)
     * [Account objects](#accounts-objects)
-* [Élève](#élève)
     * [Modules](#account-modules)
+* [Élève](#élève)
     * [Timeline](#timeline)
+    * [Timeline commune](#timeline-commune)
     * [Emploi du temps](#emploi-du-temps)
     * [Vie scolaire](#vie-scolaire)
     * [Carnet de correspondance](#carnet-de-correspondance)
