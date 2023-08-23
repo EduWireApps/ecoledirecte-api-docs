@@ -958,31 +958,32 @@ Paramètres de recherche :
  - `archive=AAAA-AAAA` pour spécifier une année précise
 
 Data dans la réponse :
-```
+```typescript
 {
-  "factures": [?],
-  "notes": [documents],
-  "viescolaire": [?],
-  "administratifs": [documents],
-  "listesPiecesAVerser": {
-    "listePieces": [],
-    "personnes": [{"id": 1234, "nom": "…", "prenom": "…", "type": "E"}],
-    "pieces": [],
-    "televersements": []
+  factures: [], // ?
+  notes: Array<Document>,
+  viescolaire: [], // ?
+  administratifs: Array<Document>,
+  inscriptions?: [], // ?
+  listesPiecesAVerser: {
+    listePieces: [], // ?
+    personnes: Array<{id: 1234, nom: "…", prenom: "…", type: "E"}>,
+    pieces: [], // ?
+    televersements: [] // ?
   }
 }
 ```
 
 Type des objets document :
-```
-{
-  "id": int,
-  "libelle": string,
-  "idEleve": int,
-  "date": "AAAA-MM-JJ",
-  "type": "Note" | "Doc" | "",
-  "signatureDemandee": boolean,
-  "signature": {?}
+```typescript
+type Document = {
+  id: int,
+  libelle: string,
+  idEleve: int,
+  date: "AAAA-MM-JJ",
+  type: "Note" | "Doc" | "",
+  signatureDemandee: bool, // ?
+  signature: {}
 }
 ```
 
