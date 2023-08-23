@@ -27,7 +27,11 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
 * [Élève](#élève)
     * [Timeline](#timeline)
     * [Timeline commune](#timeline-commune)
+    * [Sondages](#sondages)
+    * [Formulaires](#formulaires)
+    * [Visios](#visios)
     * [Emploi du temps](#emploi-du-temps)
+    * [Cahier de texte](#cahier-de-texte)
     * [Vie scolaire](#vie-scolaire)
     * [Carnet de correspondance](#carnet-de-correspondance)
     * [Documents administratifs](#documents-administratifs)
@@ -645,6 +649,24 @@ Data dans la réponse :
 }
 ```
 
+### Sondages
+
+__GET__ `/v3/rdt/sondages.awp`
+
+J'ai eu une réponse avec une liste vide dans `data` donc réponse inconnue.
+
+### Formulaires
+
+__LIST__ `/v3/edforms.awp`
+
+Ici aussi, une liste vide donc réponse inconnue.
+
+### Visios
+
+__GET__ `/v3/E/{id}/visios.awp`
+
+Pas de visios ici non plus donc réponse inconnue.
+
 ### Emploi du temps
 
 Le titre est plutot clair non ?
@@ -718,6 +740,130 @@ Data dans la réponse :
       "isAnnule": false
     }
 ]
+```
+
+### Cahier de texte
+
+__GET__ `/v3/Eleves/{id}/cahierdetexte.awp`
+
+Donne les devoirs à faire à partir d'aujourd'hui (onglet *à faire*).
+
+Data dans la réponse :
+```typescript
+{
+  "AAAA-MM-JJ": Array<{
+	matiere: string, // Nom d'affichage ("FRANCAIS" / "ENSEIGN.SCIENTIFIQUE")
+	codeMatiere: string, // Code ("FRANC" / "G-SCI")
+	aFaire: true, // ?
+	idDevoir: number,
+	documentsAFaire: false, // ?
+	donneLe: "AAAA-MM-JJ",
+	effectue: bool, // Si marqué par l'élève comme tel ?
+	interrogation: bool,
+	rendreEnLigne: bool, // Si présence d'un formulaire pour rendre un fichier ?
+  }>,
+}
+```
+
+__GET__ `/v3/Eleves/{id}/cahierdetexte/{AAAA-MM-JJ}.awp`
+
+Permet d'obtenir le travail à faire en détail et le contenu de séance pour un jour spécifique.
+
+**Note**: Il y a deux champs contenu de séance, un directement dans la matière et un dans à faire. Je suspecte que celui  dans à faire soit prévu avant la séance alors que celui directement dans la matière soit renseigné après les faits.
+
+Je vérifierai la différence quand EcoleDirecte sera à nouveau fonctionnel et que j'aurai un exemple des deux.
+
+Data dans la réponse :
+```typescript
+{
+  date: "AAAA-MM-JJ", // Même date que celle passée dans l'URL
+  matieres: Array<{
+	entityCode: string, // Classe ("1A") / groupe
+	entityLibelle: string, // Nom d'affichage de la classe ("PREMIERE A")
+	entityType: "C" | "G" | string, // C = Classe, G = Groupe, ...
+	matiere: string,
+	codeMatiere: string, // Pareils que route précédente
+	nomProf: string,
+	id: number, // Même id que idDevoir dans la route précédente
+	interrogation: bool,
+	blogActif: false, // ?
+	nbJourMaxRenduDevoir: number, // Date butoir du rendu ?
+	aFaire: {
+	  idDevoir: number,
+	  contenu: string, // Détail du travail à faire
+	  rendreEnLigne: bool,
+	  donneLe: "AAAA-MM-JJ",
+	  effectue: bool,
+	  ressource: "", // ?, vide jusqu'ici
+	  ressourceDocuments: [], // ?, vide jusqu'ici
+	  documents: Array<{ // Pièces jointes
+		id: number, // Pour la télécharger via la route de téléchargement
+		libelle: string, // Nom
+		date: "AAAA-MM-JJ",
+		taille: number, // En octets
+		type: "FICHIER_CDT", // Autres valeurs ?
+		signatureDemandee: false, // ?
+		signature: {}, // ?
+	  }>,
+	  commentaires: Array<{
+	    id: number, // identifiant du commentaire
+		idAuteur: number, // identifiant de l'auteur
+		profilAuteur: "E", // E = Elève, autres valeurs ?
+		auteur: string, // Nom de l'auteur
+		date: "AAAA-MM-JJ",
+		message: string, // Encodé en base64
+		supprime: false, // Si le commentaire a été supprimé ? (semble stupide)
+	  }>,
+      elementsProg: [], // ?
+      liensManuel: [], // URL des manuels associés à la matière ?
+      documentsRendus: [], // Fichiers rendus lorsque le formulaire est présent ?
+      contenuDeSeance: {
+        contenu: string,
+        documents: [],
+        commentaires: [],
+      },
+    },
+    contenuDeSeance: {
+      idDevoir: number, // Systématiquement le même identifiant que id plus haut
+      contenu: string,
+      documents: [], // Pièces jointes ?
+      commentaires: [], // Même structure que commentaires sur travail à faire ?
+      elementsProg: [],
+      liensManuel: [],
+    },
+  }>
+}
+```
+
+__PUT__ `/v3/Eleves/{id}/cahierdetexte.awp`
+
+Marque des devoirs comme faits ou non faits.
+
+Data en body :
+```typescript
+{
+  idDevoirsEffectues: number[],
+  idDevoirsNonEffectues: number[],
+}
+```
+
+__POST__ `/v3/eleves/{id}/afaire/commentaires.awp`
+
+Poste un commentaire sous un travail à faire ou un contenu de séance
+
+Data en body :
+```typescript
+{
+  message: string, // encodé en base64
+  idContenu: number, // identifiant du devoir / contenu de séance
+}
+```
+
+Data dans la réponse :
+```typescript
+{
+  id: number, // Identifiant du commentaire posté
+}
 ```
 
 ### Vie scolaire
