@@ -22,19 +22,19 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
   - [Servers.json](#serversjson)
 
 * [Login](#login)
-    * [Account objects](#accounts-objects)
+  * [Account objects](#accounts-objects)
     * [Modules](#account-modules)
 * [Élève](#élève)
-    * [Timeline](#timeline)
-    * [Timeline commune](#timeline-commune)
-    * [Sondages](#sondages)
-    * [Formulaires](#formulaires)
-    * [Visios](#visios)
-    * [Emploi du temps](#emploi-du-temps)
-    * [Cahier de texte](#cahier-de-texte)
-    * [Vie scolaire](#vie-scolaire)
-    * [Carnet de correspondance](#carnet-de-correspondance)
-    * [Documents administratifs](#documents-administratifs)
+  * [Timeline](#timeline)
+  * [Timeline commune](#timeline-commune)
+  * [Sondages](#sondages)
+  * [Formulaires](#formulaires)
+  * [Visios](#visios)
+  * [Emploi du temps](#emploi-du-temps)
+  * [Cahier de texte](#cahier-de-texte)
+  * [Vie scolaire](#vie-scolaire)
+  * [Carnet de correspondance](#carnet-de-correspondance)
+  * [Documents administratifs](#documents-administratifs)
 
 
 ## Format de la documentation
@@ -53,11 +53,11 @@ Les réponses suivent généralement le format suivant, et tout schéma de répo
 
 ```jsonc
 {
-	"host": "HTTP<n° serveur>",
-	"code": 200,
-	"token": "<token>",
-	"message": "", // Rarement présent
-	"data": {...},
+  "host": "HTTP<n° serveur>",
+  "code": 200,
+  "token": "<token>",
+  "message": "", // Rarement présent
+  "data": {...},
 }
 ```
 
@@ -165,6 +165,8 @@ Voici le lien du fichier : [https://www.ecoledirecte.com/EDCluster/servers.json]
       "nbConnexions": 1,//int | Nombre d'utilisateur connectés ??
       "errorCode": "ESOCKETTIMEDOUT"
     },
+  ],
+}
 ```
 
 ----
@@ -178,10 +180,10 @@ __POST__ `/v3/login.awp`
 Data en body :
 ```json
 {
-    "identifiant": "Username",
-    "motdepasse": "Password",
-	"isRelogin": false,
-	"uuid": ""
+  "identifiant": "Username",
+  "motdepasse": "Password",
+  "isRelogin": false,
+  "uuid": ""
 }
 ```
 
@@ -197,7 +199,7 @@ Différents exemples de réponses complètes. Elles suivent le modèle de répon
   "message": "", //Utilisé pour afficher des messages d'erreur
   "data": {
     "accounts": [
-        //Liste d'utilisateur liés au compte, voir la référence pour plus
+      // Liste d'utilisateur liés au compte, voir la référence pour plus
     ]
   }
 }
@@ -241,56 +243,56 @@ Voici la structure détaillée d'un utilisateur (et commentée) qui est contenu 
 
 ```js
 {
-    "idLogin": 1324, //int | Paramètre de cookie pour savoir si l'utilisateur est connecté via login/password
-    "id": 1234,  //int | Numéro de compte
-    "uid": "00000000000000000000000000000000", //string | Il ne sert à rien lui aussi
-    "identifiant": "Username", //string | Username du compte
-    "typeCompte": "E", //string | Voir Type de compte dans la référence
-    "codeOgec": "000000000", //string | Code RNE de l'établissement scolaire du compte
-    "main": true, //bool | Indique si ce compte est le compte principal de la famille(il peut en avoir plusieur comme avec un parent)
-    "lastConnexion": "2021-10-05 18:28", //string | Date de dernière connexion à l'api via l'endpoint login (multiples connexions possibles)
-    "civilite": "",
-    "prenom": "John",
-    "particule": "",
-    "nom": "DOE",
-    "email": "email@example.com",
-    "anneeScolaireCourante": "2050-2051",
+  "idLogin": 1324, //int | Paramètre de cookie pour savoir si l'utilisateur est connecté via login/password
+  "id": 1234,  //int | Numéro de compte
+  "uid": "00000000000000000000000000000000", //string | Il ne sert à rien lui aussi
+  "identifiant": "Username", //string | Username du compte
+  "typeCompte": "E", //string | Voir Type de compte dans la référence
+  "codeOgec": "000000000", //string | Code RNE de l'établissement scolaire du compte
+  "main": true, //bool | Indique si ce compte est le compte principal de la famille(il peut en avoir plusieur comme avec un parent)
+  "lastConnexion": "2021-10-05 18:28", //string | Date de dernière connexion à l'api via l'endpoint login (multiples connexions possibles)
+  "civilite": "",
+  "prenom": "John",
+  "particule": "",
+  "nom": "DOE",
+  "email": "email@example.com",
+  "anneeScolaireCourante": "2050-2051",
+  "nomEtablissement": "Github",
+  "logoEtablissement": "",
+  "couleurAgendaEtablissement": "#1796b0",
+  "dicoEnLigneLeRobert": false,
+  "socketToken": "secret token", //string | Websocket, à priori il n'est pas prit en compte concernant l'authentification (si on le change on ne sera pas déconnecté)
+  "modules": [
+    // Liste des modules
+  ],
+  "parametresIndividuels": {
+    "lsuPoilDansLaMainBorne1": "", // int | Paramètre parcoursup
+    "lsuPoilDansLaMainBorne2": "", // int | Paramètre parcoursup
+    "lsuPoilDansLaMainBorne3": "", // int | Paramètre parcoursup
+    "modeCalculLSU": "", // ??? | Paramètre de recommandation parcoursup
+    "isQrcode": false, // ???
+    "accessibilitéVisuelle": false, // bool | Pour les personnes malvoyantes, une police spéciale est mise en place
+    "typeSaisieNotesDefaut": "",
+    "nbJoursMaxRenduDevoirCDT": "",
+    "typeViewCDTDefaut": ""
+  },
+  "profile": {
+    "sexe": "M",
+    "infoEDT": "",
     "nomEtablissement": "Github",
-    "logoEtablissement": "",
-    "couleurAgendaEtablissement": "#1796b0",
-    "dicoEnLigneLeRobert": false,
-    "socketToken": "secret token", //string | Websocket, à priori il n'est pas prit en compte concernant l'authentification (si on le change on ne sera pas déconnecté)
-        "modules": [
-          //Liste des modules, voir la référence pour plus
-        ],
-        "parametresIndividuels": {
-          "lsuPoilDansLaMainBorne1": "", // int | Paramètre parcoursup
-          "lsuPoilDansLaMainBorne2": "", // int | Paramètre parcoursup
-          "lsuPoilDansLaMainBorne3": "", // int | Paramètre parcoursup
-          "modeCalculLSU": "", // ??? | Paramètre de recommandation parcoursup
-          "isQrcode": false, // ???
-          "accessibilitéVisuelle": false, // bool | Pour les personnes malvoyantes, une police spéciale est mise en place
-          "typeSaisieNotesDefaut": "",
-          "nbJoursMaxRenduDevoirCDT": "",
-          "typeViewCDTDefaut": ""
-        },
-        "profile": {
-          "sexe": "M",
-          "infoEDT": "",
-          "nomEtablissement": "Github",
-          "idEtablissement": "0",
-          "rneEtablissement": "0000000",
-          "telPortable": "",
-          "idReelEtab": "0",
-          "photo": "//doc1.ecoledirecte.com/PhotoEleves/x/y.jpg",
-          "classe": {
-            "id": 44,
-            "code": "TB",
-            "libelle": "Terminale B",
-            "estNote": 1
-          }
-        }
-      }
+    "idEtablissement": "0",
+    "rneEtablissement": "0000000",
+    "telPortable": "",
+    "idReelEtab": "0",
+    "photo": "//doc1.ecoledirecte.com/PhotoEleves/x/y.jpg",
+    "classe": {
+      "id": 44,
+      "code": "TB",
+      "libelle": "Terminale B",
+      "estNote": 1
+    }
+  }
+}
 ```
 
 ### Account modules
@@ -299,11 +301,11 @@ Ces modules là sont ceux disponibles dans l'object account, ils ressemblent à 
 
 ```js
 {
-    "code": "CANTINE_BARCODE", //string | Nom du module
-    "enable": false, //bool | Si le module est actif pour l'account en question
-    "ordre": 1, //int | Position dans la sidebar
-    "badge": 0, //int | ???
-    "params": {} //object | Parametres du modules
+  "code": "CANTINE_BARCODE", //string | Nom du module
+  "enable": false, //bool | Si le module est actif pour l'account en question
+  "ordre": 1, //int | Position dans la sidebar
+  "badge": 0, //int | ???
+  "params": {} //object | Parametres du modules
 }
 ```
 
@@ -311,263 +313,263 @@ Voici la liste des modules qui ont été documentés jusqu'a présent
 
 ```js
 {
-    "code": "CANTINE_BARCODE",
-    "enable": false,
-    "ordre": 1,
-    "badge": 0,
-    "params": {}
+  "code": "CANTINE_BARCODE",
+  "enable": false,
+  "ordre": 1,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "VIE_SCOLAIRE",
-    "enable": true,
-    "ordre": 10,
-    "badge": 0,
-    "params": {}
+  "code": "VIE_SCOLAIRE",
+  "enable": true,
+  "ordre": 10,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "VIE_DE_LA_CLASSE",
-    "enable": true,
-    "ordre": 20,
-    "badge": 0,
-    "params": {}
+  "code": "VIE_DE_LA_CLASSE",
+  "enable": true,
+  "ordre": 20,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "NOTES",
-    "enable": true,
-    "ordre": 30,
-    "badge": 0,
-    "params": {}
+  "code": "NOTES",
+  "enable": true,
+  "ordre": 30,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "CLOUD",
-    "enable": false,
-    "ordre": 90,
-    "badge": 0,
-    "params": {}
+  "code": "CLOUD",
+  "enable": false,
+  "ordre": 90,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "MESSAGERIE",
-    "enable": true,
-    "ordre": 40,
-    "badge": 0,
-    "params": {
-        "isActif": "1",
-        "canParentsLireMessagesEnfants": "1",
-        "destAdmin": "0",
-        "destEleve": "0",
-        "destFamille": "0",
-        "destProf": "1",
-        "destEspTravail": "0",
-        "disabledNotification": "0",
-        "notificationEmailEtablissement": "1",
-        "choixMailNotification": "0",
-        "autreMailNotification": "",
-        "mailPro": "",
-        "mailPerso": "",
-        "messagerieApiVersion": "v3",
-        "blackListProfActive": "0",
-        "estEnBlackList": "0",
-        "afficherToutesLesClasses": "0"
-    }
+  "code": "MESSAGERIE",
+  "enable": true,
+  "ordre": 40,
+  "badge": 0,
+  "params": {
+    "isActif": "1",
+    "canParentsLireMessagesEnfants": "1",
+    "destAdmin": "0",
+    "destEleve": "0",
+    "destFamille": "0",
+    "destProf": "1",
+    "destEspTravail": "0",
+    "disabledNotification": "0",
+    "notificationEmailEtablissement": "1",
+    "choixMailNotification": "0",
+    "autreMailNotification": "",
+    "mailPro": "",
+    "mailPerso": "",
+    "messagerieApiVersion": "v3",
+    "blackListProfActive": "0",
+    "estEnBlackList": "0",
+    "afficherToutesLesClasses": "0"
+  }
 },
 {
-    "code": "EDT",
-    "enable": true,
-    "ordre": 50,
-    "badge": 0,
-    "params": {}
+  "code": "EDT",
+  "enable": true,
+  "ordre": 50,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "DOCUMENTS_ELEVE",
-    "enable": true,
-    "ordre": 71,
-    "badge": 0,
-    "params": {
-        "DocumentsNotesActif": "1",
-        "DocumentsVSActif": "1",
-        "DocumentsAdministratifActif": "1"
-    }
+  "code": "DOCUMENTS_ELEVE",
+  "enable": true,
+  "ordre": 71,
+  "badge": 0,
+  "params": {
+    "DocumentsNotesActif": "1",
+    "DocumentsVSActif": "1",
+    "DocumentsAdministratifActif": "1"
+  }
 },
 {
-    "code": "CAHIER_DE_TEXTES",
-    "enable": true,
-    "ordre": 60,
-    "badge": 0,
-    "params": {
-        "compteRenduSeance": "1",
-        "compteRenduSeancePrevisionnel": "0",
-        "isCDTPrimaire": "0"
-    }
+  "code": "CAHIER_DE_TEXTES",
+  "enable": true,
+  "ordre": 60,
+  "badge": 0,
+  "params": {
+    "compteRenduSeance": "1",
+    "compteRenduSeancePrevisionnel": "0",
+    "isCDTPrimaire": "0"
+  }
 },
 {
-    "code": "MANUELS_SCOLAIRES",
-    "enable": false,
-    "ordre": 62,
-    "badge": 0,
-    "params": {}
+  "code": "MANUELS_SCOLAIRES",
+  "enable": false,
+  "ordre": 62,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "QCM",
-    "enable": true,
-    "ordre": 65,
-    "badge": 0,
-    "params": {}
+  "code": "QCM",
+  "enable": true,
+  "ordre": 65,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "RESERVATIONS",
-    "enable": false,
-    "ordre": 80,
-    "badge": 0,
-    "params": {
-        "regime": "Externe",
-        "repasmidi_1": "0",
-        "repassoir_1": "0",
-        "repasmidi_2": "0",
-        "repassoir_2": "0",
-        "repasmidi_3": "0",
-        "repassoir_3": "0",
-        "repasmidi_4": "0",
-        "repassoir_4": "0",
-        "repasmidi_5": "0",
-        "repassoir_5": "0",
-        "repasmidi_6": "0",
-        "repassoir_6": "0",
-        "repasmidi_7": "0",
-        "repassoir_7": "0"
-    }
+  "code": "RESERVATIONS",
+  "enable": false,
+  "ordre": 80,
+  "badge": 0,
+  "params": {
+    "regime": "Externe",
+    "repasmidi_1": "0",
+    "repassoir_1": "0",
+    "repasmidi_2": "0",
+    "repassoir_2": "0",
+    "repasmidi_3": "0",
+    "repassoir_3": "0",
+    "repasmidi_4": "0",
+    "repassoir_4": "0",
+    "repasmidi_5": "0",
+    "repassoir_5": "0",
+    "repasmidi_6": "0",
+    "repassoir_6": "0",
+    "repasmidi_7": "0",
+    "repassoir_7": "0"
+  }
 },
 {
-    "code": "COMMANDE_PASSAGE",
-    "enable": false,
-    "ordre": 81,
-    "badge": 0,
-    "params": {}
+  "code": "COMMANDE_PASSAGE",
+  "enable": false,
+  "ordre": 81,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "CARNET_CORRESPONDANCE",
-    "enable": false,
-    "ordre": 70,
-    "badge": 0,
-    "params": {}
+  "code": "CARNET_CORRESPONDANCE",
+  "enable": false,
+  "ordre": 70,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "ESIDOC",
-    "enable": false,
-    "ordre": 110,
-    "badge": 0,
-    "params": {}
+  "code": "ESIDOC",
+  "enable": false,
+  "ordre": 110,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "EDUNAO",
-    "enable": false,
-    "ordre": 100,
-    "badge": 0,
-    "params": {}
+  "code": "EDUNAO",
+  "enable": false,
+  "ordre": 100,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "CATER",
-    "enable": false,
-    "ordre": 90,
-    "badge": 0,
-    "params": {}
+  "code": "CATER",
+  "enable": false,
+  "ordre": 90,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "ARD",
-    "enable": false,
-    "ordre": 120,
-    "badge": 0,
-    "params": {}
+  "code": "ARD",
+  "enable": false,
+  "ordre": 120,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "PEARLTREES",
-    "enable": false,
-    "ordre": 170,
-    "badge": 0,
-    "params": {}
+  "code": "PEARLTREES",
+  "enable": false,
+  "ordre": 170,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "EDUMALIN",
-    "enable": false,
-    "ordre": 171,
-    "badge": 0,
-    "params": {}
+  "code": "EDUMALIN",
+  "enable": false,
+  "ordre": 171,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "SUIVI_STAGE",
-    "enable": false,
-    "ordre": 43,
-    "badge": 0,
-    "params": {}
+  "code": "SUIVI_STAGE",
+  "enable": false,
+  "ordre": 43,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "CLICKNPLAY",
-    "enable": false,
-    "ordre": 171,
-    "badge": 0,
-    "params": {}
+  "code": "CLICKNPLAY",
+  "enable": false,
+  "ordre": 171,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "VOLTAIRE",
-    "enable": false,
-    "ordre": 175,
-    "badge": 0,
-    "params": {}
+  "code": "VOLTAIRE",
+  "enable": false,
+  "ordre": 175,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "ONISEPSERVICES",
-    "enable": false,
-    "ordre": 172,
-    "badge": 0,
-    "params": {}
+  "code": "ONISEPSERVICES",
+  "enable": false,
+  "ordre": 172,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "AVENRIA",
-    "enable": false,
-    "ordre": 173,
-    "badge": 0,
-    "params": {}
+  "code": "AVENRIA",
+  "enable": false,
+  "ordre": 173,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "SACOCHE",
-    "enable": false,
-    "ordre": 174,
-    "badge": 0,
-    "params": {}
+  "code": "SACOCHE",
+  "enable": false,
+  "ordre": 174,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "ETUDIANT",
-    "enable": false,
-    "ordre": 176,
-    "badge": 0,
-    "params": {}
+  "code": "ETUDIANT",
+  "enable": false,
+  "ordre": 176,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "IJBOX",
-    "enable": false,
-    "ordre": 177,
-    "badge": 0,
-    "params": {}
+  "code": "IJBOX",
+  "enable": false,
+  "ordre": 177,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "FUTURNESS",
-    "enable": false,
-    "ordre": 178,
-    "badge": 0,
-    "params": {}
+  "code": "FUTURNESS",
+  "enable": false,
+  "ordre": 178,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "IMPALA",
-    "enable": false,
-    "ordre": 179,
-    "badge": 0,
-    "params": {}
+  "code": "IMPALA",
+  "enable": false,
+  "ordre": 179,
+  "badge": 0,
+  "params": {}
 },
 {
-    "code": "SITUATION_FINANCIERE",
-    "enable": false,
-    "ordre": 92,
-    "badge": 0,
-    "params": {}
+  "code": "SITUATION_FINANCIERE",
+  "enable": false,
+  "ordre": 92,
+  "badge": 0,
+  "params": {}
 }
 ```
 
@@ -583,38 +585,38 @@ __GET__ `/v3/eleves/{id}/timeline.awp`
 Data dans la réponse :
 ```js
 [ //Liste des évènements relatif au compte (quelques exemples d'évènement peuvent être trouvés)
-    {
-      "date": "2021-12-05", //String | Date de l'evènement
-      "typeElement": "Note", //String | Type de l'event (Note / Abscence / Document / Messagerie / VieScolaire / ...)
-      "idElement": 0, // identifiant du message / evt de vie scolaire / document associé
-      "titre": "Nouvelle évaluation", //String | Titre de l'evenement
-      "soustitre": "ED.PHYSIQUE & SPORT.",
-      "contenu": "natation du 15/11/2021" //String | Contenu de l'evenement
-    },
-    {
-      "date": "2021-09-20",
-      "typeElement": "VieScolaire",
-      "idElement": 527,
-      "titre": "Absence",
-      "soustitre": "2 demi-journées",
-      "contenu": "Justifiée"
-    },
-    {
-      "date": "2021-09-17",
-      "typeElement": "Document",
-      "idElement": 2538,
-      "titre": "Nouveau document à télécharger",
-      "soustitre": "",
-      "contenu": "Invitation 50 ans"
-    },
-    {
-      "date": "2021-09-09",
-      "typeElement": "Document",
-      "idElement": 1144,
-      "titre": "Nouveau document à télécharger",
-      "soustitre": "",
-      "contenu": "Certificat de scolarité"
-    }
+  {
+    "date": "2021-12-05", //String | Date de l'evènement
+    "typeElement": "Note", //String | Type de l'event (Note / Abscence / Document / Messagerie / VieScolaire / ...)
+    "idElement": 0, // identifiant du message / evt de vie scolaire / document associé
+    "titre": "Nouvelle évaluation", //String | Titre de l'evenement
+    "soustitre": "ED.PHYSIQUE & SPORT.",
+    "contenu": "natation du 15/11/2021" //String | Contenu de l'evenement
+  },
+  {
+    "date": "2021-09-20",
+    "typeElement": "VieScolaire",
+    "idElement": 527,
+    "titre": "Absence",
+    "soustitre": "2 demi-journées",
+    "contenu": "Justifiée"
+  },
+  {
+    "date": "2021-09-17",
+    "typeElement": "Document",
+    "idElement": 2538,
+    "titre": "Nouveau document à télécharger",
+    "soustitre": "",
+    "contenu": "Invitation 50 ans"
+  },
+  {
+    "date": "2021-09-09",
+    "typeElement": "Document",
+    "idElement": 1144,
+    "titre": "Nouveau document à télécharger",
+    "soustitre": "",
+    "contenu": "Certificat de scolarité"
+  }
 ]
 ```
 
@@ -627,25 +629,25 @@ C'est la timeline de l'établissement que tous les élèves voient. Elle inclue 
 Data dans la réponse :
 ```jsonc
 {
-	"evenements": [], // ?
-	"postits": [{
-		"id": int,
-		"type": string, // "info", ?
-		"contenu": string // HTML encodé en base64
-		"dateCreation": "JJ/MM/AAAA",
-		"dateDebut": "JJ/MM/AAAA",
-		"dateFin": "JJ/MM/AAAA",
-		"cible": [], // ?
-		"ciblesEtab": [], // ?
-		"auteur": {
-			"civilite": string, // M.
-			"prenom": string,
-			"particule": string,
-			"nom": string,
-			"type": string, // "A", ?
-			"id": string, // Identifiant de la personne
-		},
-	}],
+  "evenements": [], // ?
+  "postits": Array<{
+    "id": int,
+    "type": string, // "info", ?
+    "contenu": string // HTML encodé en base64
+    "dateCreation": "JJ/MM/AAAA",
+    "dateDebut": "JJ/MM/AAAA",
+    "dateFin": "JJ/MM/AAAA",
+    "cible": [], // ?
+    "ciblesEtab": [], // ?
+    "auteur": {
+      "civilite": string, // M.
+      "prenom": string,
+      "particule": string,
+      "nom": string,
+      "type": string, // "A", ?
+      "id": string, // Identifiant de la personne
+    },
+  }>,
 }
 ```
 
@@ -687,58 +689,58 @@ Data en body :
 Data dans la réponse :
 ```js
 [
-    {
-      "id": 46234, //int | Semble être un identifiant unique du cours
-      "text": "NUMERIQUE SC.INFORM.", //string | Nom du cours (peut diférer de la matière)
-      "matiere": "NUMERIQUE SC.INFORM.",
-      "codeMatiere": "NSINF", //string | Code matière interne au service ED
-      "typeCours": "COURS", //string | Semble varier (COURS / PERMANENCE)
-      "start_date": "2021-12-15 08:00",
-      "end_date": "2021-12-15 08:55",
-      "color": "#91b2bc", //string | Couleur hex du cours sur l'edt
-      "dispensable": false, //string | Si l'élève doit se rendre en cours
-      "dispense": 0, //int | Rhalala, le sport (:
-      "prof": "MaitreRouge",
-      "salle": "SALLE 11 INFO",
-      "classe": "", //string | vide si est dispensé dans plusieures classes
-      "classeId": 0, //int | ID de la classe dans laquelle le cours est dispensé (0 si est dispensé dans plusieures classes)
-      "classeCode": "", //int | Code de la classe (je pense qu'on a compris avec le temps que c'était vide si la cours était dispensé dans plusieures classes)
-      "groupe": "T_NSINF-1", //string | Nom du groupe (si dispensé dans plusieures classes)
-      "groupeCode": "T_NSINF-1",//string | Code du groupe
-      "isFlexible": false, //bool | ???
-      "groupeId": 2004, //int | ID du groupe
-      "icone": "", //string | Depuis quand on peut avoir des icones ?
-      "isModifie": false, //bool | ???
-      "contenuDeSeance": false, //bool | false même si du contenu est posté
-      "devoirAFaire": false, //bool | false même si un devoir est posté
-      "isAnnule": false //bool | Si le cours est annulé (franglais dégeu)
-    },
-    {
-      "id": 78905,
-      "text": "ANGLAIS LV1",
-      "matiere": "ANGLAIS LV1",
-      "codeMatiere": "AGL1",
-      "typeCours": "COURS",
-      "start_date": "2021-12-15 10:00",
-      "end_date": "2021-12-15 10:55",
-      "color": "#ff66cc",
-      "dispensable": false,
-      "dispense": 0,
-      "prof": "Florian L",
-      "salle": "SALLE 44",
-      "classe": "Terminale B",
-      "classeId": 44,
-      "classeCode": "TB",
-      "groupe": "",
-      "groupeCode": "",
-      "isFlexible": false,
-      "groupeId": 0,
-      "icone": "",
-      "isModifie": false,
-      "contenuDeSeance": false,
-      "devoirAFaire": false,
-      "isAnnule": false
-    }
+  {
+    "id": 46234, //int | Semble être un identifiant unique du cours
+    "text": "NUMERIQUE SC.INFORM.", //string | Nom du cours (peut diférer de la matière)
+    "matiere": "NUMERIQUE SC.INFORM.",
+    "codeMatiere": "NSINF", //string | Code matière interne au service ED
+    "typeCours": "COURS", //string | Semble varier (COURS / PERMANENCE)
+    "start_date": "2021-12-15 08:00",
+    "end_date": "2021-12-15 08:55",
+    "color": "#91b2bc", //string | Couleur hex du cours sur l'edt
+    "dispensable": false, //string | Si l'élève doit se rendre en cours
+    "dispense": 0, //int | Rhalala, le sport (:
+    "prof": "MaitreRouge",
+    "salle": "SALLE 11 INFO",
+    "classe": "", //string | vide si est dispensé dans plusieures classes
+    "classeId": 0, //int | ID de la classe dans laquelle le cours est dispensé (0 si est dispensé dans plusieures classes)
+    "classeCode": "", //int | Code de la classe (je pense qu'on a compris avec le temps que c'était vide si la cours était dispensé dans plusieures classes)
+    "groupe": "T_NSINF-1", //string | Nom du groupe (si dispensé dans plusieures classes)
+    "groupeCode": "T_NSINF-1",//string | Code du groupe
+    "isFlexible": false, //bool | ???
+    "groupeId": 2004, //int | ID du groupe
+    "icone": "", //string | Depuis quand on peut avoir des icones ?
+    "isModifie": false, //bool | ???
+    "contenuDeSeance": false, //bool | false même si du contenu est posté
+    "devoirAFaire": false, //bool | false même si un devoir est posté
+    "isAnnule": false //bool | Si le cours est annulé (franglais dégeu)
+  },
+  {
+    "id": 78905,
+    "text": "ANGLAIS LV1",
+    "matiere": "ANGLAIS LV1",
+    "codeMatiere": "AGL1",
+    "typeCours": "COURS",
+    "start_date": "2021-12-15 10:00",
+    "end_date": "2021-12-15 10:55",
+    "color": "#ff66cc",
+    "dispensable": false,
+    "dispense": 0,
+    "prof": "Florian L",
+    "salle": "SALLE 44",
+    "classe": "Terminale B",
+    "classeId": 44,
+    "classeCode": "TB",
+    "groupe": "",
+    "groupeCode": "",
+    "isFlexible": false,
+    "groupeId": 0,
+    "icone": "",
+    "isModifie": false,
+    "contenuDeSeance": false,
+    "devoirAFaire": false,
+    "isAnnule": false
+  }
 ]
 ```
 
@@ -752,15 +754,15 @@ Data dans la réponse :
 ```typescript
 {
   "AAAA-MM-JJ": Array<{
-	matiere: string, // Nom d'affichage ("FRANCAIS" / "ENSEIGN.SCIENTIFIQUE")
-	codeMatiere: string, // Code ("FRANC" / "G-SCI")
-	aFaire: true, // ?
-	idDevoir: number,
-	documentsAFaire: false, // ?
-	donneLe: "AAAA-MM-JJ",
-	effectue: bool, // Si marqué par l'élève comme tel ?
-	interrogation: bool,
-	rendreEnLigne: bool, // Si présence d'un formulaire pour rendre un fichier ?
+    matiere: string, // Nom d'affichage ("FRANCAIS" / "ENSEIGN.SCIENTIFIQUE")
+    codeMatiere: string, // Code ("FRANC" / "G-SCI")
+    aFaire: true, // ?
+    idDevoir: number,
+    documentsAFaire: false, // ?
+    donneLe: "AAAA-MM-JJ",
+    effectue: bool, // Si marqué par l'élève comme tel ?
+    interrogation: bool,
+    rendreEnLigne: bool, // Si présence d'un formulaire pour rendre un fichier ?
   }>,
 }
 ```
@@ -778,42 +780,42 @@ Data dans la réponse :
 {
   date: "AAAA-MM-JJ", // Même date que celle passée dans l'URL
   matieres: Array<{
-	entityCode: string, // Classe ("1A") / groupe
-	entityLibelle: string, // Nom d'affichage de la classe ("PREMIERE A")
-	entityType: "C" | "G" | string, // C = Classe, G = Groupe, ...
-	matiere: string,
-	codeMatiere: string, // Pareils que route précédente
-	nomProf: string,
-	id: number, // Même id que idDevoir dans la route précédente
-	interrogation: bool,
-	blogActif: false, // ?
-	nbJourMaxRenduDevoir: number, // Date butoir du rendu ?
-	aFaire: {
-	  idDevoir: number,
-	  contenu: string, // Détail du travail à faire
-	  rendreEnLigne: bool,
-	  donneLe: "AAAA-MM-JJ",
-	  effectue: bool,
-	  ressource: "", // ?, vide jusqu'ici
-	  ressourceDocuments: [], // ?, vide jusqu'ici
-	  documents: Array<{ // Pièces jointes
-		id: number, // Pour la télécharger via la route de téléchargement
-		libelle: string, // Nom
-		date: "AAAA-MM-JJ",
-		taille: number, // En octets
-		type: "FICHIER_CDT", // Autres valeurs ?
-		signatureDemandee: false, // ?
-		signature: {}, // ?
-	  }>,
-	  commentaires: Array<{
-	    id: number, // identifiant du commentaire
-		idAuteur: number, // identifiant de l'auteur
-		profilAuteur: "E", // E = Elève, autres valeurs ?
-		auteur: string, // Nom de l'auteur
-		date: "AAAA-MM-JJ",
-		message: string, // Encodé en base64
-		supprime: false, // Si le commentaire a été supprimé ? (semble stupide)
-	  }>,
+    entityCode: string, // Classe ("1A") / groupe
+    entityLibelle: string, // Nom d'affichage de la classe ("PREMIERE A")
+    entityType: "C" | "G" | string, // C = Classe, G = Groupe, ...
+    matiere: string,
+    codeMatiere: string, // Pareils que route précédente
+    nomProf: string,
+    id: number, // Même id que idDevoir dans la route précédente
+    interrogation: bool,
+    blogActif: false, // ?
+    nbJourMaxRenduDevoir: number, // Date butoir du rendu ?
+    aFaire: {
+      idDevoir: number,
+      contenu: string, // Détail du travail à faire
+      rendreEnLigne: bool,
+      donneLe: "AAAA-MM-JJ",
+      effectue: bool,
+      ressource: "", // ?, vide jusqu'ici
+      ressourceDocuments: [], // ?, vide jusqu'ici
+      documents: Array<{ // Pièces jointes
+        id: number, // Pour la télécharger via la route de téléchargement
+        libelle: string, // Nom
+        date: "AAAA-MM-JJ",
+        taille: number, // En octets
+        type: "FICHIER_CDT", // Autres valeurs ?
+        signatureDemandee: false, // ?
+        signature: {}, // ?
+      }>,
+      commentaires: Array<{
+        id: number, // identifiant du commentaire
+        idAuteur: number, // identifiant de l'auteur
+        profilAuteur: "E", // E = Elève, autres valeurs ?
+        auteur: string, // Nom de l'auteur
+        date: "AAAA-MM-JJ",
+        message: string, // Encodé en base64
+        supprime: false, // Si le commentaire a été supprimé ? (semble stupide)
+      }>,
       elementsProg: [], // ?
       liensManuel: [], // URL des manuels associés à la matière ?
       documentsRendus: [], // Fichiers rendus lorsque le formulaire est présent ?
@@ -875,55 +877,55 @@ __GET__ `/v3/eleves/{id}/viescolaire.awp`
 Data dans la réponse :
 ```js
 {
-      "absencesRetards":[
-         {
-            "id":2936, //int | Identifiant interne de l'abscence / retard
-            "idEleve":0, //int | Normalement égal à l'id de l'eleve mais 0 dans mon cas
-            "nomEleve":"", //string | Normalement rempli mais vide dans mon cas
-            "typeElement":"Absence", //string | Sert pour savoir si c'est une abscence ou un retard
-            "date":"2021-11-19",
-            "displayDate":"le vendredi 19 novembre 2021 de 08:30 à 16:30",
-            "libelle":"2 demi-journées",
-            "motif":"",
-            "justifie":true, //bool | Si jamais justufié ou non (note : si jamais elle est en attente de justification, elle sera a true)
-            "par":"",
-            "commentaire":"Merci de bien vouloir excuser l'absence de X pour la journée, il est souffrant.\nBien cordialement,",
-            "typeJustification":" en attente de prise en compte par la vie scolaire",
-            "justifieEd":true,
-            "aFaire":"",
-            "dateDeroulement":""
-         }
-      ],
-      "sanctionsEncouragements":[
-         {
-            "id":48,
-            "idEleve":0,
-            "nomEleve":"",
-            "typeElement":"Punition",
-            "date":"2021-11-26",
-            "displayDate":"",
-            "libelle":"RETENUE",
-            "motif":"Trop de mots dans le carnet",
-            "justifie":false,
-            "par":"",
-            "commentaire":"",
-            "typeJustification":"",
-            "justifieEd":false,
-            "aFaire":"1 heure",
-            "dateDeroulement":"S'est déroulé le mer. 08 décembre<BR>de 13:00 à 14:00"
-         }
-      ],
-      "parametrage":{
-         "justificationEnLigne":true,
-         "absenceCommentaire":true,
-         "retardCommentaire":true,
-         "sanctionsVisible":true,
-         "sanctionParQui":false,
-         "sanctionCommentaire":true,
-         "encouragementsVisible":false,
-         "encouragementParQui":false,
-         "encouragementCommentaire":false
-      }
+  "absencesRetards":[
+    {
+      "id":2936, //int | Identifiant interne de l'abscence / retard
+      "idEleve":0, //int | Normalement égal à l'id de l'eleve mais 0 dans mon cas
+      "nomEleve":"", //string | Normalement rempli mais vide dans mon cas
+      "typeElement":"Absence", //string | Sert pour savoir si c'est une abscence ou un retard
+      "date":"2021-11-19",
+      "displayDate":"le vendredi 19 novembre 2021 de 08:30 à 16:30",
+      "libelle":"2 demi-journées",
+      "motif":"",
+      "justifie":true, //bool | Si jamais justufié ou non (note : si jamais elle est en attente de justification, elle sera a true)
+      "par":"",
+      "commentaire":"Merci de bien vouloir excuser l'absence de X pour la journée, il est souffrant.\nBien cordialement,",
+      "typeJustification":" en attente de prise en compte par la vie scolaire",
+      "justifieEd":true,
+      "aFaire":"",
+      "dateDeroulement":""
+    }
+  ],
+  "sanctionsEncouragements":[
+    {
+      "id":48,
+      "idEleve":0,
+      "nomEleve":"",
+      "typeElement":"Punition",
+      "date":"2021-11-26",
+      "displayDate":"",
+      "libelle":"RETENUE",
+      "motif":"Trop de mots dans le carnet",
+      "justifie":false,
+      "par":"",
+      "commentaire":"",
+      "typeJustification":"",
+      "justifieEd":false,
+      "aFaire":"1 heure",
+      "dateDeroulement":"S'est déroulé le mer. 08 décembre<BR>de 13:00 à 14:00"
+    }
+  ],
+  "parametrage": {
+    "justificationEnLigne":true,
+    "absenceCommentaire":true,
+    "retardCommentaire":true,
+    "sanctionsVisible":true,
+    "sanctionParQui":false,
+    "sanctionCommentaire":true,
+    "encouragementsVisible":false,
+    "encouragementParQui":false,
+    "encouragementCommentaire":false
+  }
 }
 ```
 
@@ -936,12 +938,12 @@ __GET__ `/v3/eleves/{id}/eleveCarnetCorrespondance.awp`
 Data dans la réponse :
 ```jsonc
 {
-		"correspondances": [
-			// ?
-		],
-		"suivis": [
-			// ?
-		]
+  "correspondances": [
+    // ?
+  ],
+  "suivis": [
+    // ?
+  ]
 }
 ```
 
@@ -958,29 +960,29 @@ Paramètres de recherche :
 Data dans la réponse :
 ```
 {
-		"factures": [?],
-		"notes": [documents],
-		"viescolaire": [?],
-		"administratifs": [documents],
-		"listesPiecesAVerser": {
-			"listePieces": [],
-			"personnes": [{"id": 1234, "nom": "…", "prenom": "…", "type": "E"}],
-			"pieces": [],
-			"televersements": []
-		}
+  "factures": [?],
+  "notes": [documents],
+  "viescolaire": [?],
+  "administratifs": [documents],
+  "listesPiecesAVerser": {
+    "listePieces": [],
+    "personnes": [{"id": 1234, "nom": "…", "prenom": "…", "type": "E"}],
+    "pieces": [],
+    "televersements": []
+  }
 }
 ```
 
 Type des objets document :
 ```
 {
-	"id": int,
-	"libelle": string,
-	"idEleve": int,
-	"date": "AAAA-MM-JJ",
-	"type": "Note" | "Doc" | "",
-	"signatureDemandee": boolean,
-	"signature": {?}
+  "id": int,
+  "libelle": string,
+  "idEleve": int,
+  "date": "AAAA-MM-JJ",
+  "type": "Note" | "Doc" | "",
+  "signatureDemandee": boolean,
+  "signature": {?}
 }
 ```
 
