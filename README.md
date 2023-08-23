@@ -767,6 +767,8 @@ Data dans la réponse :
 }
 ```
 
+<br/>
+
 __GET__ `/v3/Eleves/{id}/cahierdetexte/{AAAA-MM-JJ}.awp`
 
 Permet d'obtenir le travail à faire en détail et le contenu de séance pour un jour spécifique.
@@ -837,6 +839,8 @@ Data dans la réponse :
 }
 ```
 
+<br/>
+
 __PUT__ `/v3/Eleves/{id}/cahierdetexte.awp`
 
 Marque des devoirs comme faits ou non faits.
@@ -848,6 +852,8 @@ Data en body :
   idDevoirsNonEffectues: number[],
 }
 ```
+
+<br/>
 
 __POST__ `/v3/eleves/{id}/afaire/commentaires.awp`
 
