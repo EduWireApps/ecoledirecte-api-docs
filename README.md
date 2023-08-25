@@ -888,7 +888,7 @@ Data dans la réponse :
       "id":2936, //int | Identifiant interne de l'abscence / retard
       "idEleve":0, //int | Normalement égal à l'id de l'eleve mais 0 dans mon cas
       "nomEleve":"", //string | Normalement rempli mais vide dans mon cas
-      "typeElement":"Absence", //string | Sert pour savoir si c'est une abscence ou un retard
+      "typeElement":"Absence", //string | Sert pour savoir si c'est une "Abscence" ou un "Retard"
       "date":"2021-11-19",
       "displayDate":"le vendredi 19 novembre 2021 de 08:30 à 16:30",
       "libelle":"2 demi-journées",
@@ -897,7 +897,7 @@ Data dans la réponse :
       "par":"",
       "commentaire":"Merci de bien vouloir excuser l'absence de X pour la journée, il est souffrant.\nBien cordialement,",
       "typeJustification":" en attente de prise en compte par la vie scolaire",
-      "justifieEd":true,
+      "justifieEd":true, // Si on peut justifier en ligne ?
       "aFaire":"",
       "dateDeroulement":""
     }
