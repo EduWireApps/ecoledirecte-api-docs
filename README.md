@@ -37,6 +37,8 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
   * [Documents administratifs](#documents-administratifs)
   * [Notes](#notes)
   * [Espaces de travail](#espaces-de-travail)
+  * [Manuels numériques](#manuels-numériques)
+  * [QCMs](#qcms)
 
 
 ## Format de la documentation
@@ -1214,3 +1216,31 @@ __DELETE__ /v3/E/{id}/espacestravail/{espace.id}/acces.awp
 Permet de quitter un espace de travail.
 
 Pas besoin d'envoyer quoi que ce soit en body; pas de réponse non plus.
+
+### Manuels numériques
+
+__GET__ `/v3/Eleves/{id}/manuelsNumeriques.awp`
+
+Liste les manuels numériques disponibles pour l'élève.
+
+Data dans la réponse :
+```typescript
+Array<{
+  libelle: string,
+  url: string,
+  urlCouverture: string,
+  urlTelechargement: "",
+  editeur: string,
+  idRessource: string, // Je sais pas à quoi ça peut bien servir (peut-être dans l'EDT ?)
+  affecte: true, // ?
+  ogec: string, // Code d'organisme de gestion catholique (lié à certains éditeurs de manuel je crois)
+  eleves: [], // ?
+  disciplines: Array<string>, // Codes des matières concernées. Vide ou 1 élément jusqu'ici
+}>
+```
+
+### QCMs
+
+__GET__ `/v3/eleves/{id}/qcms/0/associations.awp`
+
+Aucune idée de ce que ça fait. Si vous avez des données, n'hésitez pas.
