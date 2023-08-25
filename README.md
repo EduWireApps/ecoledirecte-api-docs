@@ -994,3 +994,156 @@ type Document = {
 ```
 
 Les documents peuvent être téléchargés via la route de téléchargement grâce à leur id.
+
+### Notes
+
+__GET__ `/v3/eleves/{id}/notes.awp`
+
+Les données dans la réponse sont un peu un bordel. Il y a les moyennes par période (trimestres et année), puis les notes individuelles, puis les paramètres d'affichage des notes. Ce qui veut dire que même si l'établissement désactive l'affichage de jsp quoi c'est quand même transmis, je pense (donc on peut quand même y accéder).
+
+Data en body :
+```typescript
+{
+  "anneeScolaire": "",
+}
+```
+
+Data dans la réponse :
+```typescript
+{
+  foStat: string, // Une sorte d'identifiant bizarre
+  periodes: Array<{
+    idPeriode: "A001" | "A002" | "A003" | "A999Z",
+    codePeriode: "A001" | "A002" | "A003" | "A999Z",
+    periode: "1er Trimestre" | "2ème Trimestre" | "3ème Trimestre" | "Année",
+    annuel: bool, // false pour A001..A003, true pour A999Z
+    dateDebut: "AAAA-MM-JJ",
+    dateFin: "AAAA-MM-JJ",
+    examenBlanc: false,
+    cloture: bool, // true si la période est terminée, sinon false (cloturée)
+    dateConseil?: "AAAA-MM-JJ", // Présent pour les trimestres
+    heureConseil?: "HH:MM",
+    heureFinConseil?: "HH:MM",
+    moyNbreJoursApresConseil: 0, // moyenne du nombre de jours après le conseil, mais quels jours ?
+    ensembleMatieres: {
+      dateCalcul: "AAAA-MM-JJ HH:MM",
+      moyenneGenerale: "XX,YY", // C'est-à-dire une chaîne de caractère qui contient un nombre à virgule
+      moyenneClasse: "XX,YY",
+      moyenneMin: "XX,YY",
+      moyenneMax: "XX,YY",
+      nomPP: string, // Prof principal
+      nomCE: "", // ?
+      decisionDuConseil: "", // Probablement une fonctionnalité de bulletin en ligne
+      disciplines: Array<{
+        id: number,
+        codeMatiere: string,
+        codeSousMatiere: "",
+        discipline: string, // = matière
+        moyenne: "XX,YY",
+        moyenneClasse: "XX,YY",
+        moyenneMin: "XX,YY",
+        moyenneMax: "XX,YY",
+        coef: 1,
+        effectif: number, // Nombre de notes dans la moyenne ?
+        rang: number, // Rang de l'élève dans la classe ?
+        groupeMatiere: false,
+        idGroupeMatiere: 0,
+        option: 0,
+        sousMatiere: false,
+        saisieAppreciationSSMAT: false,
+        professeurs: Array<{ id: number, nom: string }>,
+      }>,
+      disciplinesSimulation: [],
+    },
+  }>,
+  notes: Array<{
+    id: number, // Identifiant de la note j'imagine
+    devoir: string, // Nom du contrôle
+    codePeriode: "A001" | "A002" | "A003",
+    codeMatiere: string, // Nom abbrégé
+    libelleMatiere: string, // Nom de la matière
+    codeSousMatiere: "",
+    typeDevoir: "CONTROLE" | "INTERROGATION ORALE" | "TRAVAUX PRATIQUES" | "DEVOIR SUR TABLE" | "INTERROGATION ECRITE" | "EXERCICE" | "ENSEIGNEMENTS PRATIQUES DISCIPLINAIRES" | "DEVOIR MAISON", // Probablement pas renseigné par le professeur donc liste probablement fixe
+    enLettre: false,
+    commentaire: string, // Probablement un truc écrit par le prof
+    uncSujet: "", // UNC = chemin de fichier, probablement un lien vers le fichier sujet / corrigé
+    uncCorrige: "",
+    coef: "XX.YY",
+    noteSur: "XX,YY",
+    valeur: "XX,YY", // Note, enfin
+    nonSignificatif: bool,
+    date: "AAAA-MM-JJ", // Date du contrôle
+    dateSaisie: "AAAA-MM-JJ", // Date de l'ajout de la note, souvent les deux sont égaux (mais pas trjs)
+    valeurisee: false, // ?
+    moyenneClasse: "XX.YY",
+    minClasse: "XX.YY",
+    maxClasse: "XX.YY",
+    elementsProgramme: [], // Liste de compétences ou qqch du genre j'imagine
+  }>,
+  parametrage: { // Différents paramètres d'affichage, de ce qui s'affiche ou non
+    couleurEval1: "#FF0000", // Couleurs des compétences
+    couleurEval2: "#FFC000",
+    couleurEval3: "#0070C0",
+    couleurEval4: "#00B050",
+    libelleEval1: "Tm9uIGF0dGVpbnRz", // Non atteints (base64)
+    libelleEval2: "UGFydGllbGxlbWVudCBhdHRlaW50cw==", // Partiellement atteints
+    libelleEval3: "QXR0ZWludHM=", // Atteints
+    libelleEval4: "RMOpcGFzc8Opcw==", // Dépassés
+    affichageMoyenne: true,
+    affichageMoyenneDevoir: true,
+    affichagePositionMatiere: false,
+    affichageNote: true,
+    affichageCompetence: false,
+    affichageEvaluationsComposantes: false,
+    affichageGraphiquesComposantes: true,
+    modeCalculGraphiquesComposantes: "eval",
+    affichageCompNum: false,
+    libelleEvalCompNum1: "Tm9uIGF0dGVpbnQ=", // Non atteint
+    libelleEvalCompNum2: "UGFydGllbGxlbWVudCBhdHRlaW50", // Partiellement atteint
+    libelleEvalCompNum3: "QXR0ZWludA==", // Atteint
+    affichageAppreciation: false,
+    appreciationsProf: false,
+    appreciationProfPrinc: false,
+    affichageMention: false,
+    affichageAppreciationCE: false,
+    affichageAppreciationVS: false,
+    affichageAppreciationCN: false,
+    affichageAppreciationClasse: false,
+    affichageAppreciationPeriodeCloturee: false,
+    moyenneUniquementPeriodeCloture: false,
+    moyennePeriodeReleve: true,
+    moyennePeriodeAnnuelle: true,
+    moyennePeriodeHorsP: true,
+    moyenneEleveDansNotes: true,
+    moyenneEleve: true,
+    moyenneEleveDansMoyenne: true,
+    moyenneGenerale: true,
+    moyenneCoefMatiere: true,
+    moyenneClasse: true,
+    moyenneMin: true,
+    moyenneMax: true,
+    moyenneRang: false,
+    moyenneSur: 20,
+    moyenneGraphique: true,
+    moyennesSimulation: false,
+    coefficientNote: true,
+    colonneCoefficientMatiere: true,
+    noteGrasSousMoyenne: false,
+    noteGrasAudessusMoyenne: false,
+    libelleDevoir: true,
+    dateDevoir: true,
+    typeDevoir: true,
+    noteUniquementPeriodeCloture: false,
+    notePeriodeReleve: false,
+    notePeriodeAnnuelle: false,
+    notePeriodeHorsP: false,
+    libellesAppreciations: Array<"Appréciation générale">,
+    appreciationsParametrage: Array<{
+      code: "APP1",
+      id: 1,
+      nbMaxCaractere: 400,
+      libelle: "Appréciation générale",
+    }>,
+  },
+}
+```
