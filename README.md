@@ -36,6 +36,7 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
   * [Carnet de correspondance](#carnet-de-correspondance)
   * [Documents administratifs](#documents-administratifs)
   * [Notes](#notes)
+  * [Espaces de travail](#espaces-de-travail)
 
 
 ## Format de la documentation
@@ -1148,3 +1149,68 @@ Data dans la réponse :
   },
 }
 ```
+
+### Espaces de travail
+
+__GET__ `/v3/E/{id}/espacestravail.awp`
+
+Liste les espaces de travail relatifs à l'élève. Voir route suivante pour le type workspace
+
+Data dans la réponse :
+```typescript
+Array<Workspace>
+```
+
+<br/>
+
+__GET__ `/v3/E/{id}/espacestravail/{espace.id}.awp`
+
+Data dans la réponse :
+```typescript
+type Workspace = {
+  id: number, // Identifiant de l'espace de travail
+  titre: string,
+  description: "", // Semble toujours vide, peut-être une version plus courte de "résumé"
+  resume: string, // Encodé en base64
+  cloud: true, // Probablement si le cloud, les discussions ou l'agenda sont activés ou non
+  discussion: bool,
+  agenda: bool,
+  public: bool, // Si l'espace est visible par tous les élèves
+  ouvert: bool, // Si les élèves peuvent rejoindre l'espace librement
+  type: "LIBRE",
+  estMembre: bool,
+  estAdmin: false,
+  salleDesProfs: false, // Probablement pour l'équivalent prof des espaces de travail qui peuvent aussi servir de salle des profs numérique
+  creePar: string, // Nom du créateur (Prénom NOM ... NOMS)
+  droitUtilisateur: 0 | 1 | 2, // ?
+  nbMembres: 0,
+  couleurEvenementAgenda: "#RRVVBB",
+  creeLe?: "JJ/MM/AAAA à HH:MM",
+}
+```
+
+<br/>
+
+__POST__ /v3/E/{id}/espacestravail/{espace.id}/acces.awp
+
+Permet de joindre un espace de travail.
+
+Si la notation typescript ne vous est pas familière, ça veut dire qu'il faut renseigner les mêmes champs que ceux de Workspace à l'exception de `type` et `creeLe`, et aussi renseigner `cloudLibelle` et `fullLoaded`.
+
+TODO: Vérifier si le corps de requête est nécessaire pour joindre l'espace de travail
+
+Data en body :
+```typescript
+Omit<Workspace, "type" | "creeLe"> & {
+  cloudLibelle: string, // Semble être la même valeur que le `titre` de l'espace
+  fullLoaded: false,
+}
+```
+
+<br/>
+
+__DELETE__ /v3/E/{id}/espacestravail/{espace.id}/acces.awp
+
+Permet de quitter un espace de travail.
+
+Pas besoin d'envoyer quoi que ce soit en body; pas de réponse non plus.
