@@ -39,6 +39,8 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
   * [Espaces de travail](#espaces-de-travail)
   * [Manuels numériques](#manuels-numériques)
   * [QCMs](#qcms)
+* [Classe](#classe)
+  * [Vie de la classe](#vie-de-la-classe)
 
 
 ## Format de la documentation
@@ -1244,3 +1246,14 @@ Array<{
 __GET__ `/v3/eleves/{id}/qcms/0/associations.awp`
 
 Aucune idée de ce que ça fait. Si vous avez des données, n'hésitez pas.
+
+
+## Classe
+
+### Vie de la classe
+
+Il existe deux routes différentes, mais je n'ai eu que des objets vides comme réponse.
+
+__GET__ `/v3/Classes/{classe.id}/viedelaclasse.awp`
+
+__GET__ `/v3/R/{classe.id}/viedelaclasse.awp`
