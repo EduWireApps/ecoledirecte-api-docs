@@ -41,6 +41,12 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
   * [QCMs](#qcms)
 * [Classe](#classe)
   * [Vie de la classe](#vie-de-la-classe)
+* [Cloud](#cloud)
+  * [Chemins](#chemins)
+  * [Cloud élève](#cloud-élève)
+  * [Cloud espaces de travail](#cloud-espaces-de-travail)
+  * [Téléversement](#téléversement)
+  * [Téléchargement](#téléchargement)
 
 
 ## Format de la documentation
@@ -1257,3 +1263,200 @@ Il existe deux routes différentes, mais je n'ai eu que des objets vides comme r
 __GET__ `/v3/Classes/{classe.id}/viedelaclasse.awp`
 
 __GET__ `/v3/R/{classe.id}/viedelaclasse.awp`
+
+
+## Cloud
+
+### Chemins
+
+Les fichiers dans le cloud sont identifiés par leur chemin. C'est des chemins *windows*, parfois appelés `unc` dans l'API.
+
+On trouve différents types de chemins, avec RNE le code RNE de l'établissement :
+  - Les chemins des clouds élèves, du type `\{RNE}\E\{id}\...`
+  - Les chemins des clouds des espaces de travail, du type `\{RNE}\W\{ent.id}\...`
+  - Les chemins des ressources temporaires, du type `\\STOCK-TMP\tmp\{RNE}_{role}_{id}_{hash}\...`
+
+Parfois les chemins sont préfixés par un autre cloud, du type `\\CLOUD08\cloud\...`. Même si c'est pas pour tous les fichiers. TODO: Élucider la question.
+
+### Cloud élève
+
+__GET__ `/v3/cloud/E/{id}.awp`
+
+Permet d'obtenir des informations sur un fichier ou un dossier (*nœud*) dans le cloud de l'élève.
+
+Lorsque des informations sur un dossier sont demandées, ses nœuds fils sont aussi transmis, y compris les sous-dossiers et leurs nœuds fils à eux aussi, jusqu'à une certaine profondeur. Après, la propriété `isLoaded` des sous-dossiers est mise sur `false` et il faut refaire une requête pour obtenir le contenu de ces sous-dossiers.
+
+Paramètres de recherche :
+ - `idfolder=` chemin de dossier, pour spécifier un dossier dont on veut obtenir le contenu. Ne pas indiquer pour obtenir la racine.
+
+Data dans la réponse :
+```typescript
+Array<Nœud>
+```
+
+```typescript
+type Nœud = {
+  type: "folder" | "file",
+  libelle: string, // Nom du dossier ou fichier, "/" pour la racine
+  date: "AAAA-MM-JJ HH:MM:SS",
+  taille: number,
+  quota?: number,
+  id: string, // Chemin UNC
+  isLoaded?: bool, // Présent pour les dossiers, voir plus haut
+  children?: Array<Nœud>, // Présent pour les dossiers
+  readonly: bool,
+  url?: string, // Pour les liens, leur URL
+  description?: string, // Pour les liens, leur description encodée en base64
+  proprietaire?: { // Présent pour les fichiers
+    id: number,
+    type: "E",
+    nom: string,
+    prenom: string,
+    particule: "",
+  }
+}
+```
+
+<br/>
+
+__POST__ `/v3/cloud/E/{id}.awp`
+
+Permet de créer un nouveau fichier ou dossier dans le cloud. Pour ajouter des fichiers existants, utiliser la route de téléversement.
+
+La route prend en body une propriété `parentNode` qui peut être un objet `Nœud` complet mais la propriété `id` est la seule nécessaire, le reste est facultatif.
+
+Data en body :
+```typescript
+{
+  parentNode: Pick<Nœud, "id">,
+  libelle: string, // Nom du nouveau nœud
+  typeRessource: "file" | "folder",
+}
+```
+
+Data dans la réponse :
+```typescript
+Nœud // Nœud créé
+```
+
+<br/>
+
+__PUT__ `/v3/cloud/E/{id}.awp`
+
+Permet de renommer un nœud et de changer le lien ou la description d'un lien.
+
+Data en body :
+```typescript
+{
+  node: Nœud,
+  newLibelle: string,
+  newUrl?: string,
+  newDescription?: string,
+}
+```
+
+Data dans la réponse :
+```typescript
+{
+  newId: string,
+  newLibelle: string,
+  newUrl?: string, // Présents pour les liens
+  newDescription?: string,
+}
+```
+
+<br/>
+
+__COPY__ `/v3/cloud/E/{id}.awp`
+
+Permet de copier des nœuds dans un autre dossier.
+
+Data en body :
+```typescript
+{
+  parentNode: Nœud, // Dossier de destination. TODO: Vérifier spécificité (id)
+  clipboard: Array<Nœud>, // Nœuds à copier
+}
+```
+
+Data dans la réponse :
+```typescript
+Nœud // Dossier de destination, avec les nouveaux nœuds copiés
+```
+
+<br/>
+
+__DELETE__ `/v3/cloud/E/{id}.awp`
+
+Permet de supprimer un nœud.
+
+Data en body :
+```typescript
+{
+  tabNodes: Array<Nœud>, // TODO: Vérifier si plus d'un nœud peut être spécifié
+                         // TODO: Vérifier spécificité (id)
+}
+```
+
+### Cloud espaces de travail
+
+Il existe une autre route pour les espaces de travail, `/v3/cloud/W/{workspace.id}.awp`.
+
+Il est très probable que cette route fonctionne exactement comme celle élève.
+
+### Téléversement
+
+__POST__ `/v3/televersement.awp`
+
+Permet de téléverser un ficher dans le cloud ou dans le stockage temporaire pour utilisation comme pièce jointe.
+
+Le corps de la requête contient les fichiers téléversés au format `multipart/form-data`, ou alors des données en JSON lorsqu'on téléverse un lien dans le cloud (oui c'est possible). Notez que le serveur semble totalement ignorer le header `Content-Type` donc pas de soucis à se faire.
+
+Si vous tentez de téléverser un fichier dans le cloud mais qu'un fichier du même nom existe déjà, la réponse (complète) aura le code d'erreur 573 et un message descriptif
+
+- Pour téléverser un fichier dans le stockage temporaire, il suffit d'envoyer le fichier en corps de requête comme cité précédemment.
+
+Dans ce cas, data dans la réponse :
+```typescript
+{
+  unc: string, // Chemin du fichier temporaire
+  libelle: string, // Nom du fichier
+}
+```
+
+On peut noter que le chemin est aussi présent dans la clef `message` de la réponse complète (pas limitée à `data`).
+
+- Pour téléverser un fichier dans le cloud, il faut en plus d'envoyer le fichier en corps, spécifier en paramètre de recherche `mode=CLOUD` et `dest={chemin}`, chemin étant le chemin du dossier dans lequel on téléverse.
+
+- Pour téléverser un lien dans le cloud, il suffit d'envoyer une requête avec un corps en JSON standard, qui contient :
+```typescript
+{
+  file: "{nom}.url;{url}", // nom étant le nom du lien et url son url
+  description: string, // sa description encodée en base64
+}
+```
+
+Dans ces deux cas, data dans la réponses :
+```typescript
+Nœud
+```
+
+### Téléchargement
+
+__GET__ `/v3/telechargement.awp`
+
+Permet de télécharger les fichiers dans le cloud, en pièce jointe, dans le cahier de texte et les documents administratifs.
+
+Data en body :
+```typescript
+{
+  forceDownload: 0, // ?
+}
+```
+
+- Pour télécharger un fichier dans le cloud, il suffit d'indiquer les paramètre de recherche `leTypeDeFichier=CLOUD` et `fichierId={chemin}`, chemin étant le chemin du fichier
+- Pour télécharger une pièce jointe dans le cahier de texte, il suffit d'indiquer les paramètres de recherche `leTypeDeFichier=FICHIER_CDT` et `fichierId={id}`, id étant l'identifiant de la pièce jointe
+- Pour télécharger une pièce jointe à un message, il suffit d'indiquer les paramètres de recherche `leTypeDeFichier=PIECE_JOINTE`, `fichierId={id}`, id étant l'identifiant de la pièce jointe et éventuellement `anneeMessages=AAAA-AAAA` pour télécharger des pièces jointes d'anciens messages
+- Pour télécharger un document administratif, il suffit d'indiquer le paramètre de recherche `fichierId={id}`, id étant l'identifiant du document, et éventuellement `archive=true` et `anneeArchive=AAAA-AAAA` pour accéder à d'anciens documents
+
+La réponse est évidemment le contenu du document directement.
