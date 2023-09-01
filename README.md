@@ -51,7 +51,7 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
 
 ## Format de la documentation
 
-La base de l'api élève est ``https://api.ecoledirecte.com/v3/``. Toutes les URLs relatives sont relatives à cette base.
+La base de l'api élève est ``https://api.ecoledirecte.com/``. Toutes les URLs relatives sont relatives à cette base.
 
 Les requêtes prennent généralement des paramètres soit en *query string* dans l'URL soit en JSON dans le corps de la requête. Ces paramètres sont encodés au format `application/x-www-form-urlencoded`, bien que cet encodage soit totalement optionnel pour le corps de la requête.
 
@@ -66,9 +66,9 @@ Les réponses suivent généralement le format suivant, et tout schéma de répo
 ```jsonc
 {
   "host": "HTTP<n° serveur>",
-  "code": 200,
+  "code": 200, // Ou autre en cas d'erreur
   "token": "<token>",
-  "message": "", // Rarement présent
+  "message": "", // Rarement présent hors erreur, sinon en cas d'erreur
   "data": {...},
 }
 ```
@@ -81,7 +81,7 @@ Avec les paramètres de recherche `mode=destinataire` et les paramètres en JSON
 
 Correspond à la requête
 
-__POST__ `https://api.ecoledirecte.com/v3/E/{élève.id}/visios.awp?verbe=get&mode=destinataire` avec le corps `data={ "anneeMessages": "2021-2022" }` ou bien sous forme encodée `data=%7B%20%22anneeMessages%22%3A%20%222021-2022%22%20%7D`
+__POST__ `https://api.ecoledirecte.com/v3/eleves/{élève.id}/messages/{message.id}.awp?verbe=get&mode=destinataire` avec le corps `data={ "anneeMessages": "2021-2022" }` ou bien sous forme encodée `data=%7B%20%22anneeMessages%22%3A%20%222021-2022%22%20%7D`
 
 
 ## Utilisation de l'API
@@ -1241,7 +1241,7 @@ Array<{
   editeur: string,
   idRessource: string, // Je sais pas à quoi ça peut bien servir (peut-être dans l'EDT ?)
   affecte: true, // ?
-  ogec: string, // Code d'organisme de gestion catholique (lié à certains éditeurs de manuel je crois)
+  ogec: string, // Code RNE de l'établissement scolaire
   eleves: [], // ?
   disciplines: Array<string>, // Codes des matières concernées. Vide ou 1 élément jusqu'ici
 }>
