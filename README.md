@@ -39,6 +39,7 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
   * [Espaces de travail](#espaces-de-travail)
   * [Manuels numériques](#manuels-numériques)
   * [QCMs](#qcms)
+  * [Commandes](#commandes)
 * [Classe](#classe)
   * [Vie de la classe](#vie-de-la-classe)
 * [Cloud](#cloud)
@@ -138,7 +139,7 @@ Solution: Vérifier que le body de la requete a bien été envoyé en raw (ou pl
 EcoleDirecte n'utilise pas qu'un seul serveur, il est possible d'obtenir des informations sur les serveurs du site en une seule requete.
 La raison pour laquelle cette partie est dans la partie référence c'est car cela n'a pas trop d'utilitée a vraiment parler...
 
-*Notes : Il semblerait que le fichier soit statique :c (les pings sont les mêmes depuis que j'ai commecé la doc)*
+*Notes : Il semblerait que le fichier soit statique :c (les pings sont les mêmes depuis que j'ai commencé la doc)*
 
 Voici le lien du fichier : [https://www.ecoledirecte.com/EDCluster/servers.json](https://www.ecoledirecte.com/EDCluster/servers.json)
 
@@ -147,11 +148,11 @@ Voici le lien du fichier : [https://www.ecoledirecte.com/EDCluster/servers.json]
 {
   "servers": [ //On va recevoir une liste d'objets comme celui ci dessous
     {
-      "profile": "API", //string | Alterne enre API / APIP et ALL
-      "lastCheck": "Mon Mar 16 2020 20:55:47 GMT+0100 (CET)", // ???
+      "profile": "API", //string | Alterne entre API / APIP et ALL
+      "lastCheck": "Mon Mar 16 2020 20:55:47 GMT+0100 (CET)", // la dernière fois où le serveur a été vérifié
       "name": "api.ecoledirecte.com", //string | url du serveur
       "ip": "213.32.36.118", //string | ip du serveur
-      "status": 1,//int | ???
+      "status": 1,//int | si le serveur est bien en ligne
       "responseTime": 338.23671800643206, //float | ping
       "weigth": 3, //int | ???
       "timeout": false, //bool | Si le serveur a timeout
@@ -1253,6 +1254,205 @@ __GET__ `/v3/eleves/{id}/qcms/0/associations.awp`
 
 Aucune idée de ce que ça fait. Si vous avez des données, n'hésitez pas.
 
+### Commandes
+Il s'agit d'un système de commande (click-and-collect).
+
+__GET__ `/v3/menusRestaurationScolaire.awp`
+
+Permet de récupérer l'identifiant du menu (document).
+Data dans la réponse (pour chaque semaine disponible) :
+```typescript
+type Semaine = {
+  semaine: int, // numéro de la semaine
+  doc: Array<{
+    libelle: string, // nom du document (Exemple: Menu semaine n°40)
+    id: int // numéro du document (voir téléchargement pour récupérer le document)
+  }>
+}
+```
+
+__GET__ `/v3/E/{id}/commandesPassage.awp`
+
+Permet de récupérer les points de passage possibles ainsi que des articles disponibles.
+
+Data dans la réponse :
+```typescript
+{
+  historiqueCommandes: Array<{
+    idCommande: int, //identifiant de commande
+    numeroCommande: string, //exemple: 010203-15 (probablement 15ème commande faite pour le 1er février 2003)
+    creneau: string, //exemple: "12:00 - 13:45"
+
+  }>, // permet de récupérer les commandes effectuées
+  tabPointsDePassage: Array<{
+      id: int, // identifiant du point de passage, va servir pour l'endpoint d'en dessous (idPDP)
+      libelle: string, // nom du point de passage
+      plafond: int, // ???
+      nbHeureLimiteAvantCommande: int,
+      decouvertActif: boolean, // ???
+      panierMinimum: int, // normalement que 0
+      categoriesArticles: Array<{
+        id: int,
+        libelle: string,
+        ordre: int,
+        articles: Array<{
+          code: string,
+          libelle: string,
+          description: string,
+          estFormule: boolean,
+          etat: int,
+          img: string, // (URL)
+          montant: int, // parfois étant en float
+          quantite: int,
+          quantiteMax: int,
+          estObligatoire: boolean
+          ordre: int,
+          possibilites: Array<{
+            code: string,
+            libelle: string,
+            quantite: int,
+            etat: int,
+            idCateg: int,
+            libelleCateg: string,
+            ordre: int,
+            img: string,
+            choix: Array<{
+              libelle: string,
+              id: int,
+              ordre: int
+            }>,
+          }>,
+        }>,
+      }>,
+      creneaux: Array<{
+        estComplet: boolean,
+        libelle: string
+    }>,
+    }>,
+    joursFeries: Array<{{string}}>, //exemple : ["2023-01-01", "2023-02-02", etc...]
+}
+```
+
+__GET__ /v3/E/{id}/commandesPassage/pointsDePassage/{idPDP}/{date}.awp
+
+Permet de vérifier si le point de passage est possible le jour indiqué dans la requête.<br>Le format de la date est YYYYMMDD.
+
+Data dans la réponse :
+```typescript
+{
+  creneauMinRetrait: string, // ???
+  soldePM: float, // portefeuille de l'élève
+  libellePM: string, //
+  montantDecouvert: int, //???
+  montantSemaineAtteint: boolean,
+  montantJournalierAtteint: boolean,
+  nbPassageSemaineAtteint: boolean,
+  montantSemaine: int,
+  montantJournalier: int,
+  montantActuelSemaineUser: int,
+  nbPassageSemaine: int,
+  articlesSansStock: Array<{{string}}>, // exemple : ["DONUTS", "GAUFFRES"]
+  articlesAvecStock: Array<{
+    id: int,
+    code: string
+    type: string,
+    montant: float,
+    idCateg: int
+  }>
+}
+```
+
+__POST__ ``/v3/E/{id}/commandesPassage.awp``
+
+Permet de passer une commande.
+Body:
+```typescript
+{
+  articles: Array<{
+          code: string,
+          libelle: string,
+          description: string,
+          estFormule: boolean,
+          etat: int,
+          img: string, // (URL)
+          montant: float,
+          quantite: int,
+          quantiteMax: int,
+          estObligatoire: boolean
+          ordre: int,
+          possibilites: Array<{
+            code: string,
+            libelle: string,
+            quantite: int,
+            etat: int,
+            idCateg: int,
+            libelleCateg: string,
+            ordre: int,
+            img: string,
+            choix: Array<{
+              libelle: string,
+              id: int,
+              ordre: int
+            }>,
+          }>,
+        }>,
+  creneau: string, //exemple: "12:00"
+  date: string, // YYYY-MM-DD
+  pointDePassage: int // (idPDP)
+}
+```
+En réponse, si la commande contient les bonnes informations :
+```typescript
+{
+		idCommande: int,
+		numeroCommande: string,
+		creneau: string,
+		date: string, //YYYY-MM-DD
+		dateCreneau: string,
+		etat: string,
+		estHorsDelai: boolean,
+		idUser: int,
+		typeUser: string,
+    articles: Array<{
+              code: string,
+              libelle: string,
+              description: string,
+              estFormule: boolean,
+              etat: int,
+              img: string, // (URL)
+              montant: float,
+              quantite: int,
+              quantiteMax: int,
+              estObligatoire: boolean
+              ordre: int,
+              possibilites: Array<{
+                code: string,
+                libelle: string,
+                quantite: int,
+                etat: int,
+                idCateg: int,
+                libelleCateg: string,
+                ordre: int,
+                img: string,
+                choix: Array<{
+                  libelle: string,
+                  id: int,
+                  ordre: int
+                }>,
+              }>,
+            }>,
+		pointDePassage: {
+			id: int,
+			libelle: string
+		}
+	}
+```
+Sinon, elle renvoie un code 512.
+
+__DELETE__ ``v3/E/{id}/commandesPassage/{idCommande}.awp``<br>
+
+Permet de supprimer une commande, selon l'idCommande.<br>
+Il ne renvoie rien si l'idCommande est bon. Sinon, il renvoie simplement un code erreur 210.
 
 ## Classe
 
@@ -1458,5 +1658,6 @@ Data en body :
 - Pour télécharger une pièce jointe dans le cahier de texte, il suffit d'indiquer les paramètres de recherche `leTypeDeFichier=FICHIER_CDT` et `fichierId={id}`, id étant l'identifiant de la pièce jointe
 - Pour télécharger une pièce jointe à un message, il suffit d'indiquer les paramètres de recherche `leTypeDeFichier=PIECE_JOINTE`, `fichierId={id}`, id étant l'identifiant de la pièce jointe et éventuellement `anneeMessages=AAAA-AAAA` pour télécharger des pièces jointes d'anciens messages
 - Pour télécharger un document administratif, il suffit d'indiquer le paramètre de recherche `fichierId={id}`, id étant l'identifiant du document, et éventuellement `archive=true` et `anneeArchive=AAAA-AAAA` pour accéder à d'anciens documents
+- Pour télécharger un menu de commande click-and-collect ([ici](#commandes)), il faut ajouter `leTypeDeFichier=FICHIER_MENU_RESTAURATION`, ainsi que `fichierId={id}`, id étant le numéro du document.
 
 La réponse est évidemment le contenu du document directement.
