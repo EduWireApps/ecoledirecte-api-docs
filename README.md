@@ -1282,7 +1282,39 @@ Data dans la réponse :
     idCommande: number, //identifiant de commande
     numeroCommande: string, //exemple: 010203-15 (probablement 15ème commande faite pour le 1er février 2003)
     creneau: string, //exemple: "12:00 - 13:45"
-
+    date: string,
+    etat: string,
+    estHorsDelai: boolean,
+    idUser: number,
+    typeUser: string, // ELEVE
+    articles: Array<{
+          code: string,
+          libelle: string,
+          description: string,
+          estFormule: boolean,
+          etat: number,
+          img: string, // (URL)
+          montant: number,
+          quantite: number,
+          quantiteMax: number,
+          estObligatoire: boolean
+          ordre: number,
+          possibilites: Array<{
+            code: string,
+            libelle: string,
+            quantite: number,
+            etat: number,
+            idCateg: number,
+            libelleCateg: string,
+            ordre: number,
+            img: string,
+            choix: Array<{
+              libelle: string,
+              id: number,
+              ordre: number
+            }>,
+          }>,
+        }>,
   }>, // permet de récupérer les commandes effectuées
   tabPointsDePassage: Array<{
       id: number, // identifiant du point de passage, va servir pour l'endpoint d'en dessous (idPDP)
