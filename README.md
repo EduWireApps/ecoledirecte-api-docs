@@ -644,7 +644,7 @@ Data dans la réponse :
 {
   "evenements": [], // ?
   "postits": Array<{
-    "id": int,
+    "id": number,
     "type": string, // "info", ?
     "contenu": string // HTML encodé en base64
     "dateCreation": "JJ/MM/AAAA",
@@ -996,9 +996,9 @@ Data dans la réponse :
 Type des objets document :
 ```typescript
 type Document = {
-  id: int,
+  id: number,
   libelle: string,
-  idEleve: int,
+  idEleve: number,
   date: "AAAA-MM-JJ",
   type: "Note" | "Doc" | "",
   signatureDemandee: bool, // ?
@@ -1263,10 +1263,10 @@ Permet de récupérer l'identifiant du menu (document).
 Data dans la réponse (pour chaque semaine disponible) :
 ```typescript
 type Semaine = {
-  semaine: int, // numéro de la semaine
+  semaine: number, // numéro de la semaine
   doc: Array<{
     libelle: string, // nom du document (Exemple: Menu semaine n°40)
-    id: int // numéro du document (voir téléchargement pour récupérer le document)
+    id: number // numéro du document (voir téléchargement pour récupérer le document)
   }>
 }
 ```
@@ -1279,47 +1279,47 @@ Data dans la réponse :
 ```typescript
 {
   historiqueCommandes: Array<{
-    idCommande: int, //identifiant de commande
+    idCommande: number, //identifiant de commande
     numeroCommande: string, //exemple: 010203-15 (probablement 15ème commande faite pour le 1er février 2003)
     creneau: string, //exemple: "12:00 - 13:45"
 
   }>, // permet de récupérer les commandes effectuées
   tabPointsDePassage: Array<{
-      id: int, // identifiant du point de passage, va servir pour l'endpoint d'en dessous (idPDP)
+      id: number, // identifiant du point de passage, va servir pour l'endpoint d'en dessous (idPDP)
       libelle: string, // nom du point de passage
-      plafond: int, // ???
-      nbHeureLimiteAvantCommande: int,
+      plafond: number, // ???
+      nbHeureLimiteAvantCommande: number,
       decouvertActif: boolean, // ???
-      panierMinimum: int, // normalement que 0
+      panierMinimum: number, // normalement que 0
       categoriesArticles: Array<{
-        id: int,
+        id: number,
         libelle: string,
-        ordre: int,
+        ordre: number,
         articles: Array<{
           code: string,
           libelle: string,
           description: string,
           estFormule: boolean,
-          etat: int,
+          etat: number,
           img: string, // (URL)
-          montant: int, // parfois étant en float
-          quantite: int,
-          quantiteMax: int,
+          montant: number,
+          quantite: number,
+          quantiteMax: number,
           estObligatoire: boolean
-          ordre: int,
+          ordre: number,
           possibilites: Array<{
             code: string,
             libelle: string,
-            quantite: int,
-            etat: int,
-            idCateg: int,
+            quantite: number,
+            etat: number,
+            idCateg: number,
             libelleCateg: string,
-            ordre: int,
+            ordre: number,
             img: string,
             choix: Array<{
               libelle: string,
-              id: int,
-              ordre: int
+              id: number,
+              ordre: number
             }>,
           }>,
         }>,
@@ -1341,23 +1341,23 @@ Data dans la réponse :
 ```typescript
 {
   creneauMinRetrait: string, // ???
-  soldePM: float, // portefeuille de l'élève
+  soldePM: number, // portefeuille de l'élève
   libellePM: string, //
-  montantDecouvert: int, //???
+  montantDecouvert: number, //???
   montantSemaineAtteint: boolean,
   montantJournalierAtteint: boolean,
   nbPassageSemaineAtteint: boolean,
-  montantSemaine: int,
-  montantJournalier: int,
-  montantActuelSemaineUser: int,
-  nbPassageSemaine: int,
+  montantSemaine: number,
+  montantJournalier: number,
+  montantActuelSemaineUser: number,
+  nbPassageSemaine: number,
   articlesSansStock: Array<{{string}}>, // exemple : ["DONUTS", "GAUFFRES"]
   articlesAvecStock: Array<{
-    id: int,
+    id: number,
     code: string
     type: string,
-    montant: float,
-    idCateg: int
+    montant: number,
+    idCateg: number
   }>
 }
 ```
@@ -1373,76 +1373,76 @@ Body:
           libelle: string,
           description: string,
           estFormule: boolean,
-          etat: int,
+          etat: number,
           img: string, // (URL)
-          montant: float,
-          quantite: int,
-          quantiteMax: int,
+          montant: number,
+          quantite: number,
+          quantiteMax: number,
           estObligatoire: boolean
-          ordre: int,
+          ordre: number,
           possibilites: Array<{
             code: string,
             libelle: string,
-            quantite: int,
-            etat: int,
-            idCateg: int,
+            quantite: number,
+            etat: number,
+            idCateg: number,
             libelleCateg: string,
-            ordre: int,
+            ordre: number,
             img: string,
             choix: Array<{
               libelle: string,
-              id: int,
-              ordre: int
+              id: number,
+              ordre: number
             }>,
           }>,
         }>,
   creneau: string, //exemple: "12:00"
   date: string, // YYYY-MM-DD
-  pointDePassage: int // (idPDP)
+  pointDePassage: number // (idPDP)
 }
 ```
 En réponse, si la commande contient les bonnes informations :
 ```typescript
 {
-		idCommande: int,
+		idCommande: number,
 		numeroCommande: string,
 		creneau: string,
 		date: string, //YYYY-MM-DD
 		dateCreneau: string,
 		etat: string,
 		estHorsDelai: boolean,
-		idUser: int,
+		idUser: number,
 		typeUser: string,
     articles: Array<{
               code: string,
               libelle: string,
               description: string,
               estFormule: boolean,
-              etat: int,
+              etat: number,
               img: string, // (URL)
-              montant: float,
-              quantite: int,
-              quantiteMax: int,
+              montant: number,
+              quantite: number,
+              quantiteMax: number,
               estObligatoire: boolean
-              ordre: int,
+              ordre: number,
               possibilites: Array<{
                 code: string,
                 libelle: string,
-                quantite: int,
-                etat: int,
-                idCateg: int,
+                quantite: number,
+                etat: number,
+                idCateg: number,
                 libelleCateg: string,
-                ordre: int,
+                ordre: number,
                 img: string,
                 choix: Array<{
                   libelle: string,
-                  id: int,
-                  ordre: int
+                  id: number,
+                  ordre: number
                 }>,
               }>,
             }>,
 		pointDePassage: {
-			id: int,
+			id: number,
 			libelle: string
 		}
 	}
