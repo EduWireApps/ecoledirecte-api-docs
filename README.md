@@ -640,7 +640,7 @@ __GET__ `/v3/E/{id}/timelineAccueilCommun.awp`
 C'est la timeline de l'établissement que tous les élèves voient. Elle inclue les post-its.
 
 Data dans la réponse :
-```jsonc
+```typescript
 {
   "evenements": [], // ?
   "postits": Array<{
@@ -1367,7 +1367,7 @@ Data dans la réponse :
 
 __GET__ /v3/E/{id}/commandesPassage/pointsDePassage/{idPDP}/{date}.awp
 
-Permet de vérifier si le point de passage est possible le jour indiqué dans la requête.<br>Le format de la date est YYYYMMDD.
+Permet de vérifier si le point de passage est possible le jour indiqué dans la requête.<br>Le format de la date est AAAAMMJJ.
 
 Data dans la réponse :
 ```typescript
@@ -1429,7 +1429,7 @@ Body:
           }>,
         }>,
   creneau: string, //exemple: "12:00"
-  date: string, // YYYY-MM-DD
+  date: string, // AAAA-MM-JJ
   pointDePassage: number // (idPDP)
 }
 ```
@@ -1439,7 +1439,7 @@ En réponse, si la commande contient les bonnes informations :
 		idCommande: number,
 		numeroCommande: string,
 		creneau: string,
-		date: string, //YYYY-MM-DD
+		date: string, // AAAA-MM-JJ
 		dateCreneau: string,
 		etat: string,
 		estHorsDelai: boolean,
