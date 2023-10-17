@@ -790,6 +790,8 @@ Permet d'obtenir le travail à faire en détail et le contenu de séance pour un
 
 Je vérifierai la différence quand EcoleDirecte sera à nouveau fonctionnel et que j'aurai un exemple des deux.
 
+- Les données à l'intérieur des clés `contenu` sont encodées en base64. Une fois décodées, on obtient le contenu en HTML dans une balise `<p>`.
+
 Data dans la réponse :
 ```typescript
 {
