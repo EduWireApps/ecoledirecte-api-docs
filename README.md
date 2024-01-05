@@ -17,10 +17,8 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
 
 - [Format de la documentation](#format-de-la-documentation)
 - [Utilisation de l'API](#utilisation-de-lapi)
-  - [Requêtes authentifiées](#requêtes-authentifiées)
   - [Codes erreur](#codes-erreur)
   - [Servers.json](#serversjson)
-
 * [Login](#login)
   * [Account objects](#accounts-objects)
   * [Modules](#account-modules)
@@ -96,14 +94,6 @@ Il faut savoir que si vous utilisez un useragent pour obtenir un token, il faudr
 Si vous n'avez pas d'idée en voici un :
 ```
 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
-```
-
-### Requêtes authentifiées
-
-Cela concerne toutes les routes à l'exception de `/login`. Il faut passer un `Header` à la requête avec le token (voir [login](#login)):
-
-```
-X-Token: <token>
 ```
 
 
