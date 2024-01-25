@@ -682,10 +682,11 @@ Data en body :
 {
     "anneeForms": "2023-2024",
     "typeEntity": "E",
-    "idEntity": // id élève
+    "idEntity": 1234
 }
 
 ```
+Remplacer ```1234``` par l'ID d'élève
 
 Data dans la réponse :
 
@@ -694,299 +695,36 @@ Data dans la réponse :
     {
         "questions": [
             {
-                "id": 515,
+                "id": 515, // ID de la question
                 "question": string, // encodé en base64
                 "enonce": string,  // encodé en base64
-                "typeQ": "radio", // type de sélection de choix (bouton radio, case à cocher, zone de texte)
+                "typeQ": "radio", // type de sélection de choix ("radio", "textarea", "checkbox")
                 "ordre": 16384, // ?
                 "required": true, // question obligatoire ?
-                "minChecks": 0,
-                "maxChecks": 0,
+                "minChecks": 0, // nombre de choix minimal ?
+                "maxChecks": 0,  // nombre de choix maximal ?
                 "propositions": [
                     {
-                        "id": 2568,
+                        "id": 2568, // ID de la réponse ?
                         "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 2569,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    }
-                ]
-            },
-            {
-                "id": 511,
-                "question": string, // encodé en base64
-                "enonce": string, // encodé en base64
-                "typeQ": "radio", // type de sélection de choix (bouton radio, case à cocher, zone de texte)
-                "ordre": 32768, // ?
-                "required": true, // question obligatoire ?
-                "minChecks": 0,
-                "maxChecks": 0,
-                "propositions": [
-                    {
-                        "id": 2562,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 2563,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    }
-                ]
-            },
-            {
-                "id": 513,
-                "question": string, // encodé en base64
-                "enonce": string, // encodé en base64
-                "typeQ": "radio", // type de sélection de choix (bouton radio, case à cocher, zone de texte)
-                "ordre": 81920, // ?
-                "required": true, // question obligatoire ?
-                "minChecks": 0,
-                "maxChecks": 0,
-                "propositions": [ // Choix possibles
-                    {
-                        "id": 2558,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 2559,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    }
-                ]
-            },
-            {
-                "id": 514,
-                "question": string, // encodé en base64
-                "enonce": string, // encodé en base64
-                "typeQ": "radio", // type de sélection de choix (bouton radio, case à cocher, zone de texte)
-                "ordre": 98304, // ?
-                "required": true, // question obligatoire ?
-                "minChecks": 0,
-                "maxChecks": 0,
-                "propositions": [ // Choix possibles
-                    {
-                        "id": 2560,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 2561,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
+                        "choisie": 0 // Réponse choisie ?
                     }
                 ]
             }
         ],
-        "reponses": [],
+        "reponses": [], // Vide même après avoir répondu au formulaire ?
         "formulaire": {
-            "id": 171,
+            "id": 171, // ?
             "typeF": "f", // ?
-            "titre": "Janvier 2024 - LES MIDIS DE L'ORIENTATION ",
+            "titre": string, // texte normal
             "introduction": string, // encodé en base64
             "conclusion": string, //encodé en base64
             "signature": false, // ?
-            "created": "2024-01-07 17:23:59"
+            "created": "2024-01-07 17:23:59" // Date de création du formulaire
         },
         "participant": {
-            "id": 15347 // ?
-        }
-    },
-    {
-        "questions": [
-            {
-                "id": 10,
-                "question": string, // encodé en base64
-                "enonce": "", // ?
-                "typeQ": "textarea", // type de sélection de choix (bouton radio, case à cocher, zone de texte)
-                "ordre": 16384, // ?
-                "required": true, // question obligatoire ?
-                "minChecks": 0,
-                "maxChecks": 0,
-                "propositions": [
-                    {
-                        "id": 51,
-                        "enonce": "",
-                        "choisie": 0
-                    }
-                ]
-            },
-            {
-                "id": 11,
-                "question": string, // encodé en base64
-                "enonce": "", // ?
-                "typeQ": "textarea", // type de sélection de choix (bouton radio, case à cocher, zone de texte)
-                "ordre": 32768, // ?
-                "required": true, // question obligatoire ?
-                "minChecks": 0,
-                "maxChecks": 0,
-                "propositions": [
-                    {
-                        "id": 52,
-                        "enonce": "",
-                        "choisie": 0
-                    }
-                ]
-            },
-            {
-                "id": 12,
-                "question": string, // encodé en base64
-                "enonce": "", // ?
-                "typeQ": "radio", // type de sélection de choix (bouton radio, case à cocher, zone de texte)
-                "ordre": 49152, // ?
-                "required": true, // question obligatoire ?
-                "minChecks": 0,
-                "maxChecks": 0,
-                "propositions": [
-                    {
-                        "id": 53,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 54,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 55,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 56,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 57,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 58,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 59,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    }
-                ]
-            },
-            {
-                "id": 13,
-                "question": string, // encodé en base64
-                "enonce": "", // ?
-                "typeQ": "radio", // type de sélection de choix (bouton radio, case à cocher, zone de texte)
-                "ordre": 65536, // ?
-                "required": true, // question obligatoire ?
-                "minChecks": 0,
-                "maxChecks": 0,
-                "propositions": [
-                    {
-                        "id": 60,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 61,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 62,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 63,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 64,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 65,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 66,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    }
-                ]
-            },
-            {
-                "id": 14,
-                "question": string, // encodé en base64
-                "enonce": "", // ?
-                "typeQ": "radio", // type de sélection de choix (bouton radio, case à cocher, zone de texte) 
-                "ordre": 81920, // ?
-                "required": true, // question obligatoire ?
-                "minChecks": 0,
-                "maxChecks": 0,
-                "propositions": [
-                    {
-                        "id": 67,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 68,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 69,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 70,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 71,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 72,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    },
-                    {
-                        "id": 73,
-                        "enonce": string, // encodé en base64
-                        "choisie": 0
-                    }
-                ]
-            }
-        ],
-        "reponses": [],
-        "formulaire": {
-            "id": 6,
-            "typeF": "f", // ?
-            "titre": "CHOIX DE MENUS POUR LA CLASSE DE PREMIERE EN EPS",
-            "introduction": string, // encodé en base64
-            "conclusion": string, // encodé en base64
-            "signature": false, // ?
-            "created": "2023-09-01 18:46:37"
-        },
-        "participant": {
-            "id": 15,
-            "fini": "2023-09-05 17:08:52" // Date où le formulaire a été rempli
+            "id": 15347, // ?
+            "fini": "2024-01-08 21:48:43" // Date où le formulaire a été complété
         }
     }
 ]
