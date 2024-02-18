@@ -672,9 +672,63 @@ J'ai eu une réponse avec une liste vide dans `data` donc réponse inconnue.
 
 ### Formulaires
 
-__LIST__ `/v3/edforms.awp`
+__GET__ `/v3/edforms.awp`
 
-Ici aussi, une liste vide donc réponse inconnue.
+Endpoint pour récupérer les données sur les formulaires
+
+Data en body :
+
+```typescript
+{
+    "anneeForms": "2023-2024",
+    "typeEntity": "E",
+    "idEntity": 1234
+}
+
+```
+Remplacer ```1234``` par l'ID d'élève
+
+Data dans la réponse :
+
+```typescript
+[
+    {
+        "questions": [
+            {
+                "id": 515, // ID de la question
+                "question": string, // encodé en base64
+                "enonce": string,  // encodé en base64
+                "typeQ": "radio", // type de sélection de choix ("radio", "textarea", "checkbox")
+                "ordre": 16384, // ?
+                "required": true, // question obligatoire ?
+                "minChecks": 0, // nombre de choix minimal ?
+                "maxChecks": 0,  // nombre de choix maximal ?
+                "propositions": [
+                    {
+                        "id": 2568, // ID de la réponse ?
+                        "enonce": string, // encodé en base64
+                        "choisie": 0 // Réponse choisie ?
+                    }
+                ]
+            }
+        ],
+        "reponses": [], // Vide même après avoir répondu au formulaire ?
+        "formulaire": {
+            "id": 171, // ?
+            "typeF": "f", // ?
+            "titre": string, // texte normal
+            "introduction": string, // encodé en base64
+            "conclusion": string, //encodé en base64
+            "signature": false, // ?
+            "created": "2024-01-07 17:23:59" // Date de création du formulaire
+        },
+        "participant": {
+            "id": 15347, // ?
+            "fini": "2024-01-08 21:48:43" // Date où le formulaire a été complété
+        }
+    }
+]
+```
 
 ### Visios
 
