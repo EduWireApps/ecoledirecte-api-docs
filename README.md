@@ -1,5 +1,12 @@
 # EcoleDirecte Api Documentation
 
+> [!WARNING]
+> (Mise à jour du 28/03/2024).
+>
+> À la date où cette documentation a été modifié, Aplim (la société créatrice d'EcoleDirecte) a ajouté une nouvelle fonctionnalité de QCM afin de pouvoir sécuriser les comptes EcoleDirecte de tentative de piratage.
+>
+> L'implémentation de ce système est décrite [ici](#-concernant-la-connexion-qcm).
+
 ## Introduction
 
 
@@ -114,6 +121,10 @@ Liste de differents codes erreur trouvés au fil du temps avec leur description 
 *Note : Les requêtes renveront (sauf grosse erreur côté serveur avec une 5xx) toujours dans leur header un code 200, même en cas d'erreur*
 
 ```
+Code: 250
+Problème : Il faut vérifier la connexion du compte (nouvel appareil ajouté).
+Solution : Il faut remplir un QCM (voir "⚠ Concernant la connexion (QCM)").
+
 Code: 505
 Problème: Les identifiants donnés à l'api sont erronés
 Solution: Il faut vérifier le nom d'utilisateur et/ou le mot de passe (cf Login)
@@ -249,6 +260,79 @@ Différents exemples de réponses complètes. Elles suivent le modèle de répon
 ```
 </details>
 
+### ⚠ Concernant la connexion (QCM)
+Si vous obtenez un code 250 concernant la connexion, vous devez implémenter la méthode suivante :<br>
+> **Gardez bien le token mis dans la réponse lors de votre tentative de connexion !**
+
+__GET__ `/v3/connexion/doubleauth.awp`
+
+Permet de récupérer le QCM (question et réponses) afin de pouvoir se connecter.
+
+
+Data : {} (objet vide).
+
+Réponse (toutes les questions/réponses sont encodées en Base64) :
+
+(_Cette réponse est à titre d'exemple_)
+```jsonc
+{
+    "code": 200,
+    "data": {
+        "question": "UXVlbCBlc3QgbGUgc2VucyBkZSBsYSB2aWUgPw==", // Quel est le sens de la vie ?
+        "propositions": [
+            "NDI==", // 42
+            "TGUgZnJvbWFnZQ==", // Le fromage 
+            "MiAxNDcgNDgzIDY0Nw==", // 2 147 483 647
+            //et ainsi de suite selon les réponses...
+        ]
+    },
+    "message": null, // ???
+    "host": "HTTP<n° serveur>"
+}
+```
+Une fois que vous avez récupéré les questions ainsi que les réponses :
+
+__POST__ `/v3/connexion/doubleauth.awp`
+
+Permet de répondre au QCM afin de pouvoir se connecter.
+
+Data :  
+```jsonc
+{
+    "choix": "NDI==" // Votre réponse au QCM encodée en Base64
+}
+```
+
+Si tout se passe bien, vous devriez avoir une réponse comme celle-ci :
+
+(_Cette réponse est à titre d'exemple_)
+```jsonc
+{
+    "code": 200,
+    "data": {
+        "cn": "<string spécifique encodée en Base64>",
+        "cv": "<string spécifique encodée en Base64>"
+    },
+    "message": null, // ???
+    "host": "HTTP<n°serveur>"
+}
+```
+Après tout cela, vous devez refaire une requête login, en y incluant cette fois les objets "cn" et "cv":
+```jsonc
+{
+    "identifiant": "<identifiant>",
+    "motdepasse": "<mot de passe>",
+    "isReLogin": false,
+    "uuid": "",
+    "fa": [
+        {
+            "cn": "<cn>",
+            "cv": "<cv>"
+        }
+    ]
+}
+```
+Et voilà, vous avez enfin votre token valide, prêt à être utilisé !
 
 ### Accounts objects
 
