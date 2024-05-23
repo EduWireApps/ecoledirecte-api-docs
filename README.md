@@ -334,6 +334,8 @@ Après tout cela, vous devez refaire une requête login, en y incluant cette foi
 ```
 Et voilà, vous avez enfin votre token valide, prêt à être utilisé !
 
+Note : Les objets "cn" et "cv" ne sont pas à usage unique et peuvent être stockés pour être réutilisés plus tard
+
 ### Accounts objects
 
 Voici la structure détaillée d'un utilisateur (et commentée) qui est contenu sous la clé `data` de la réponse.
