@@ -1300,8 +1300,34 @@ Data dans la réponse :
       libelle: "Appréciation générale",
     }>,
   },
+  ?LSUN: {
+    // période: data
+    A001: Array<{
+	    cdt: false, // ?
+	    codeMatiere: "MATHS", // Code abrégé de la matière
+	    libelleMatiere: "MATHEMATIQUES",
+	    isFirstOfMatiere: false, // AH
+	    nbElemProgMatiere: 2, // ?
+	    codeSousMatiere: "", // Si sous-matière
+	    libelleSousMatiere: "", // Si sous-matière
+	    isFirstOfSousMatiere: false, // AH
+	    nbElemProgSousMatiere: 0, // ?
+	    libelleElementProgramme: "Utiliser les nombres pour comparer, calculer et résoudre des problèmes ", // La compétence
+	    idElemProg: 1054, // ID de l'élement du program
+	    valeur: 3, // Sur 4 ?
+	    afc: 1, // ?
+	    professeurs: [ // Plusieurs profs ?
+	        {
+	            "id": 0, // ID du prof
+	            "nom": "M. DUPUIT P."
+	        }
+	    ]
+	}>
+  }
 }
 ```
+
+Notes : Il semble que certaine écoles aient les LSU mais pas d'autres 🤷‍♂️
 
 ### Espaces de travail
 
