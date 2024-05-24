@@ -14,7 +14,8 @@ Bienvenue sur la documentation non officielle de l'api d'ecoledirecte.
 
 Si jamais cette documentation vient a être défaillante, merci de faire une issue avec les problèmes rencontrés
 
-(Si jamais vous avez des idées de formatage, hésitez pas à me le faire savoir [MaitreRouge#6916](https://discord.gg/EHM7jubSvE))
+> [!NOTE]
+> (Si jamais vous avez des idées de formatage, hésitez pas à me le faire savoir [kekaaafm sur Discord](https://discord.gg/EHM7jubSvE))
 
 
 ## Index
@@ -63,11 +64,13 @@ La base de l'api élève est ``https://api.ecoledirecte.com/``. Toutes les URLs 
 
 Les requêtes prennent généralement des paramètres soit en *query string* dans l'URL soit en JSON dans le corps de la requête. Ces paramètres sont encodés au format `application/x-www-form-urlencoded`, bien que cet encodage soit totalement optionnel pour le corps de la requête.
 
-**Note** : On peut utiliser la fonction `encodeURIComponent()` en JavaScript et `urllib.parse.quote()` en Python pour encoder ces paramètres.
+> [!NOTE]
+> On peut utiliser la fonction `encodeURIComponent()` en JavaScript et `urllib.parse.quote()` en Python pour encoder ces paramètres.
 
 **Exemple** : Votre mot de passe est `JaimeLesK++kies&Ynotes` il faudra envoyer `JaimeLesK%2B%2Bies%26`
 
-**Important** : Toutes les requêtes sont faites en `POST`. Elles prennent aussi un paramètre `verbe` utilisé pour spécifier le verbe HTTP. Ici ce paramètre est omis et la méthode HTTP indiquée est en réalité la valeur du paramètre `verbe` (l'exemple est plus clair).
+> [!WARNING]
+> Toutes les requêtes sont faites en `POST`. Elles prennent aussi un paramètre `verbe` utilisé pour spécifier le verbe HTTP. Ici ce paramètre est omis et la méthode HTTP indiquée est en réalité la valeur du paramètre `verbe` (l'exemple est plus clair).
 
 Les réponses suivent généralement le format suivant, et tout schéma de réponse donné correspond en réalité à celui de la valeur de `data` :
 
@@ -94,16 +97,13 @@ __POST__ `https://api.ecoledirecte.com/v3/eleves/{élève.id}/messages/{message.
 
 ## Utilisation de l'API
 
-### NOTE IMPORTANTE :
-
-Avant tout, merci d'ajouter un user-agent dans vos headers pour "faire croire" à ED que vous utilisez un "vrai" navigateur pour faire vos requetes !
-
-Il faut savoir que si vous utilisez un useragent pour obtenir un token, il faudra utiliser le même useragent avec ce token. Si jamais un autre UA est utilisé, le token sera invlidé.
-
-Si vous n'avez pas d'idée en voici un :
-```
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
-```
+> [!NOTE]
+> Avant tout, merci d'ajouter un user-agent dans vos headers pour "faire croire" à ED que vous utilisez un "vrai" navigateur pour faire vos requetes !
+> Il faut savoir que si vous utilisez un useragent pour obtenir un token, il faudra utiliser le même useragent avec ce token. Si jamais un autre UA est utilisé, le token sera invlidé.
+> Si vous n'avez pas d'idée en voici un :
+> ```
+> Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
+> ```
 
 ### Requêtes authentifiées
 
@@ -150,7 +150,8 @@ Solution: Vérifier que le body de la requete a bien été envoyé en raw (ou pl
 EcoleDirecte n'utilise pas qu'un seul serveur, il est possible d'obtenir des informations sur les serveurs du site en une seule requete.
 La raison pour laquelle cette partie est dans la partie référence c'est car cela n'a pas trop d'utilitée a vraiment parler...
 
-*Notes : Il semblerait que le fichier soit statique :c (les pings sont les mêmes depuis que j'ai commencé la doc)*
+> [!NOTE]
+> Il semblerait que le fichier soit statique :c (les pings sont les mêmes depuis que j'ai commencé la doc)*
 
 Voici le lien du fichier : [https://www.ecoledirecte.com/EDCluster/servers.json](https://www.ecoledirecte.com/EDCluster/servers.json)
 
@@ -260,18 +261,22 @@ Différents exemples de réponses complètes. Elles suivent le modèle de répon
 ```
 </details>
 
-### ⚠ Concernant la connexion (QCM)
-Si vous obtenez un code 250 concernant la connexion, vous devez implémenter la méthode suivante :<br>
+> [!WARNING]
+> ⚠ Concernant la connexion (QCM)
+> Si vous obtenez un code 250 concernant la connexion, vous devez implémenter la méthode suivante :<br>
+
+> [!NOTE] 
 > **Gardez bien le token mis dans la réponse lors de votre tentative de connexion !**
 
-__GET__ `/v3/connexion/doubleauth.awp`
+ __GET__ `/v3/connexion/doubleauth.awp`
 
-Permet de récupérer le QCM (question et réponses) afin de pouvoir se connecter.
+ Permet de récupérer le QCM (question et réponses) afin de pouvoir se connecter.
+
+ > [!NOTE] 
+ > Data : {} (objet vide). Obligatoire sinon erreur parametres incorrect
 
 
-Data : {} (objet vide).
-
-Réponse (toutes les questions/réponses sont encodées en Base64) :
+ Réponse (toutes les questions/réponses sont encodées en Base64) :
 
 (_Cette réponse est à titre d'exemple_)
 ```jsonc
@@ -334,7 +339,8 @@ Après tout cela, vous devez refaire une requête login, en y incluant cette foi
 ```
 Et voilà, vous avez enfin votre token valide, prêt à être utilisé !
 
-Note : Les objets "cn" et "cv" ne sont pas à usage unique et peuvent être stockés pour être réutilisés plus tard
+> [!NOTE]
+> Note : Les objets "cn" et "cv" ne sont pas à usage unique et peuvent être stockés pour être réutilisés plus tard
 
 ### Accounts objects
 
@@ -826,7 +832,8 @@ Pas de visios ici non plus donc réponse inconnue.
 
 Le titre est plutot clair non ?
 
-*Note : Si jamais le temps est incorrect alors data sera juste un array vide*
+> [!NOTE]
+> Si jamais le temps est incorrect alors data sera juste un array vide*
 
 __GET__ `/v3/E/{id}/emploidutemps.awp`
 
@@ -926,7 +933,8 @@ __GET__ `/v3/Eleves/{id}/cahierdetexte/{AAAA-MM-JJ}.awp`
 
 Permet d'obtenir le travail à faire en détail et le contenu de séance pour un jour spécifique.
 
-**Note**: Il y a deux champs contenu de séance, un directement dans la matière et un dans à faire. Je suspecte que celui  dans à faire soit prévu avant la séance alors que celui directement dans la matière soit renseigné après les faits.
+> [!NOTE]
+> Il y a deux champs contenu de séance, un directement dans la matière et un dans à faire. Je suspecte que celui  dans à faire soit prévu avant la séance alors que celui directement dans la matière soit renseigné après les faits.
 
 Je vérifierai la différence quand EcoleDirecte sera à nouveau fonctionnel et que j'aurai un exemple des deux.
 
@@ -1327,7 +1335,8 @@ Data dans la réponse :
 }
 ```
 
-Notes : Il semble que certaine écoles aient les LSU mais pas d'autres 🤷‍♂️
+> [!NOTE]
+> Il semble que certaine écoles aient les LSU mais pas d'autres 🤷‍♂️
 
 ### Espaces de travail
 
@@ -1376,7 +1385,8 @@ Permet de joindre un espace de travail.
 
 Si la notation typescript ne vous est pas familière, ça veut dire qu'il faut renseigner les mêmes champs que ceux de Workspace à l'exception de `type` et `creeLe`, et aussi renseigner `cloudLibelle` et `fullLoaded`.
 
-TODO: Vérifier si le corps de requête est nécessaire pour joindre l'espace de travail
+> [!NOTE]
+> TODO: Vérifier si le corps de requête est nécessaire pour joindre l'espace de travail
 
 Data en body :
 ```typescript
