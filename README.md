@@ -137,6 +137,10 @@ Code: 525
 Problème: Le token est expiré
 Solution: Il faut regénérer un token (cf Login)
 
+Code : 535
+Problème : L'établissement n'est pas disponible sur EcoleDirecte
+Solution : Si la tentative de connexion est effectuée pendant des vacances scolaires, attendre la reprise des cours
+
 Code: 40129
 Problème: Format JSON invalide
 Solution: Vérifier que le body de la requete a bien été envoyé en raw (ou plain text) et qu'il respecte le formatage donné dans la documentation
