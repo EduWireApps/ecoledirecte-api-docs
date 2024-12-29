@@ -350,6 +350,45 @@ Et voilà, vous avez enfin votre token valide, prêt à être utilisé !
 > [!NOTE]
 > Note : Les objets "cn" et "cv" ne sont pas à usage unique et peuvent être stockés pour être réutilisés plus tard
 
+### Authentification type "mobile"
+
+Ce type de connexion, type "mobile" est utilisé par l'application mobile Ecoledirecte pour pouvoir renouveler le token, même après expiration.
+Elle fonctionne de la même manière que l'authentification classique, mais nécessite des valeurs supplémentaires dans le JSON.
+
+- Se connecter: __POST__ `/v3/login.awp`
+Data en body
+```js
+{
+  "identifiant": "Username",
+  "motdepasse": "Password",
+  "sesouvenirdemoi": true,
+  "isRelogin": false,
+  "uuid": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" // Un uuidv4 valide, qu'il faut générer soit-même. C'est un identifiant unique de l'appreil que l'on connecte. Il est important de le garder en mémoire pour pouvoir renouveler le token.
+}
+```
+> [!WARNING]
+> Cette requête est aussi soumise à la double authentification, voir ci-dessus...
+
+Cette requête renvoie une réponse classique. **Il faut sauvegarder la valeur de `access_token` de l'object utilisateur obtenu: cet "access_token" permet de renouveler le token.**
+
+- Renouveler le token: __POST__ `/v3/login.awp`
+
+_Pour la double authentification avec cette requête, il suffit juste de rajouter le valeur `fa`, dans le même format que pour la connexion, avec la réponse du questionnaire (`fa: [{ name: "xxx", value: "xxx" }]`)_
+
+Data en body
+```js
+{
+  "identifiant": "Username",
+  "uuid": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX", // L'uuid de l'appereil
+  "isReLogin": true, // Bien préciser que l'on renouvelle le token (on se reconnecte)
+  "motdepasse: "", // Laisser vide
+  "typeCompte": "E", // Valeur trouvable dans l'object compte
+  "accesstoken": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" // Le token d'accès précédemment obtenu
+}
+```
+
+La réponse est la même que pour le login. vous pouvez donc utiliser le nouveau token reçu !
+
 ### Accounts objects
 
 Voici la structure détaillée d'un utilisateur (et commentée) qui est contenu sous la clé `data` de la réponse.
@@ -358,7 +397,7 @@ Voici la structure détaillée d'un utilisateur (et commentée) qui est contenu 
 {
   "idLogin": 1324, //int | Paramètre de cookie pour savoir si l'utilisateur est connecté via login/password
   "id": 1234,  //int | Numéro de compte
-  "uid": "00000000000000000000000000000000", //string | Il ne sert à rien lui aussi
+  "uid": "00000000000000000000000000000000", //string | Identifiant de l'appareil connecté, sert seulement pour pouvoir renouveler le token (voir Authentification type "mobile")
   "identifiant": "Username", //string | Username du compte
   "typeCompte": "E", //string | Voir Type de compte dans la référence
   "codeOgec": "000000000", //string | Code RNE de l'établissement scolaire du compte
