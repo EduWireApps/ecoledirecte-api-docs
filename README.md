@@ -129,6 +129,10 @@ Code: 505
 Problème: Les identifiants donnés à l'api sont erronés
 Solution: Il faut vérifier le nom d'utilisateur et/ou le mot de passe (cf Login)
 
+Code: 517
+Problème: La version de l'API utilisée est invalide (ou plus supportée ?)
+Solution: Il faut utiliser une version valide dans les paramètres de la requête, après le "?" (https://api.ecoldirecte.com/v3/login.awp?v=6.17.0 par exemple)
+
 Code: 520
 Problème: Le token est invalide
 Solution: Il faut regénérer un token (cf Login)
