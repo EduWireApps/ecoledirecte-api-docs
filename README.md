@@ -44,6 +44,7 @@ Juste un rapide sommaire pour naviguer plus facilement dans la documentation.
   * [Carnet de correspondance](#carnet-de-correspondance)
   * [Documents administratifs](#documents-administratifs)
   * [Notes](#notes)
+  * [Message](#messages)
   * [Espaces de travail](#espaces-de-travail)
   * [Manuels numériques](#manuels-numériques)
   * [QCMs](#qcms)
@@ -1384,6 +1385,96 @@ Data dans la réponse :
 
 > [!NOTE]
 > Il semble que certaine écoles aient les LSU mais pas d'autres 🤷‍♂️
+
+
+### Messages
+
+Ces données sont obtenues lors la récupération de la liste des messages.
+
+__GET__ `/v3/E/{id}/messages.awp`
+
+Data dans la réponse :
+```jsonc
+{
+  "data": {
+    "classeurs": [],
+    "messages": {
+      "received": [
+        {
+          "id": 88979, // id du message
+          "responseId": 0,  // Id réponse
+          "forwardId": 0, // Id transère 
+          "mtype": "received", // ?
+          "read": true, // Message lu
+          "idDossier": -1, // ?
+          "idClasseur": 0, // ?
+          "transferred": false, // Si le message a été transferer
+          "answered": false, // Si on a répondu.
+          "to_cc_cci": "to", // si on a était en copie, copie caché ou directement addresse
+          "brouillon": false, // Type du message
+          "canAnswer": false, // si on peux répondre
+          "subject": "Example Message", // Titre du message
+          "content": "???", // ?
+          "date": "2025-01-28 14:54:02", // Data effectuer
+          "to": [], // liste des personne désignes ?
+          "files": [
+            {
+              "id": 26865, // id du fichier
+              "libelle": "File1.jpeg", // nom de celui-ci
+              "date": "2025-01-28", // data
+              "type": "PIECE_JOINTE", //type de fichier
+              "signatureDemandee": false, // Signature ?
+              "etatSignatures": [],
+              "signature": {}
+            }
+          ],
+          "from": {
+            "nom": "NOM PROM", // Nom ex: Dupont
+            "prenom": "INITIAL PROF", // ex : F.
+            "particule": "", // ?
+            "civilite": "M.", // M. ou Mme.
+            "role": "P", // P ou A
+            "listeRouge": false, // ??
+            "id": 133, // Id du prof ?
+            "read": true, 
+            "fonctionPersonnel": "" // ?
+          }
+        }
+      ],
+      "sent": [], // ?
+      "draft": [], // ?
+      "archived": [] // ?
+    },
+    "parametrage": {
+      "isActif": true, // ?
+      "canParentsLireMessagesEnfants": true, // Si compte parents peut lire messages du compte enfants
+      "destAdmin": true, // Possibilité d'envoyer aux personnes faisant partir du personnel
+      "destEleve": false, // Possibilité d'envoyer aux eleves entre-eux
+      "destFamille": false, // Possibilité d'envoyer aux Famille soit les parents
+      "destProf": true, //  Possibilité d'envoyer aux proffeseurs
+      "destEspTravail": true, // Possibilité d'envoyer aux personnes étant d'un groupe de travail
+      "disabledNotification": false, // ? 
+      "notificationEmailEtablissement": true, // Si chaque mail reçu envoit une notif par mail 
+      "choixMailNotification": 2, // ??
+      "autreMailNotification": "",
+      "mailPro": "", // 
+      "mailPerso": "", // Mail reseigné pour être averti par mail
+      "messagerieApiVersion": "v3", // Version API 
+      "blackListProfActive": false, // ???
+      "estEnBlackList": false, // ??
+      "afficherToutesLesClasses": false // ??
+    },
+    "pagination": {
+      "messagesRecusCount": 170, // Nombre de message reçu
+      "messagesEnvoyesCount": 5, // Ceux envoyés
+      "messagesArchivesCount": 0, // Archivés
+      "messagesRecusNotReadCount": 0, // No lu
+      "messagesDraftCount": 0 // Brouillon 
+    }
+  }
+}
+```
+
 
 ### Espaces de travail
 
