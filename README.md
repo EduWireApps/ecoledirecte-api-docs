@@ -208,7 +208,12 @@ Ici se trouve toute la documentation, assurez-vous d'avoir lu la référence ava
 
 ## Login
 
-__POST__ `/v3/login.awp`
+Depuis le 24/03/2025, il est nécessaire, avant le login, de récupérer un cookies "GTK" en appelant (sinon l'API vous annonce un login/mot de passe incorrect - il n'y a pas ce mecanisme sur l'admin)
+__GET__ `/v3/login.awp?gtk=1&v=4.75.0`
+
+Récupérer la valeur de ce cookies et le passer dans le post de login en header "X-Gtk".
+
+__POST__ `/v3/login.awp?v=4.75.0`
 
 Data en body :
 ```json
